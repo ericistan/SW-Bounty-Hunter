@@ -10,7 +10,7 @@ body {
 }
 
 .container {
-  max-width: 720px;
+  max-width: 1440px;
   margin: 4rem auto;
   padding: 1.5rem;
   background: #ffffff;
@@ -34,4 +34,17 @@ button {
 
 button:hover {
   background: #1d4ed8;
+}
+
+#game-board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.hole {
+  border: 1px solid #303030;
+  padding: 1rem;
+  height: 150px;
 }

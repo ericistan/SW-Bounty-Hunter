@@ -7,12 +7,53 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <main class="container">
-      <h1>SW Bounty Hunter</h1>
-      <p>
-        Edit <strong>index.html</strong>, <strong>styles.css</strong>, and
-        <strong>script.js</strong> to get started.
-      </p>
+    <main>
+      <!-- Game Info Panel -->
+      <div id="game-info" class="container">
+        <h1>SW Bounty Hunter</h1>
+        <div id="score">Score: 0</div>
+        <div id="timer">Time Left: 30s</div>
+        <div id="health">Health: 3</div>
+        <button id="start-button">Start Game</button>
+        <button id="reset-button">Reset Game</button>
+      </div>
+      
+      <!-- Game Board -->
+      <div id="game-board" class="container">
+        <div class="hole" hole-index="0">1</div>
+        <div class="hole" hole-index="1">2</div>
+        <div class="hole" hole-index="2">3</div>
+        <div class="hole" hole-index="3">4</div>
+        <div class="hole" hole-index="4">5</div>
+        <div class="hole" hole-index="5">6</div>
+        <div class="hole" hole-index="6">7</div>
+        <div class="hole" hole-index="7">8</div>
+        <div class="hole" hole-index="8">9</div>
+      </div>
+      
+      <!-- Legend side panel with character icons and descriptions -->
+      <div id="legend" class="container">
+        <h2>Legend</h2>
+        <div class="legend-item">
+          <span class="legend-character stormtrooper"></span>
+          <span>Stormtrooper: 10 points, -1 health</span>
+        </div>
+        <div class="legend-item">
+          <span class="legend-character commander"></span>
+          <span>Commander: 20 points, -1 health</span>
+        </div>
+        <div class="legend-item">
+          <span class="legend-character death-trooper"></span>
+          <span>Death Trooper: 30 points, -1 health</span>
+        </div>
+        <div class="legend-item">
+          <span class="legend-character grogu"></span>
+          <span>Grogu: 50 points, +1 health</span>
+        </div>
+        <div class="legend-item">
+          <span class="legend-character armorer"></span>
+          <span>The Armorer: 40 points, no health change</span>
+        </div>
     </main>
     <script src="script.js"></script>
   </body>
