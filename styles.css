@@ -5,7 +5,7 @@
 body {
   margin: 0;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background: #f5f7fb;
+  background: #333333;
   color: #1f2937;
 }
 
@@ -13,7 +13,7 @@ body {
   max-width: 1440px;
   margin: 4rem auto;
   padding: 1.5rem;
-  background: #ffffff;
+  background: #eeeeee;
   border: 1px solid #e5e7eb;
   border-radius: 12px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
@@ -47,4 +47,9 @@ button:hover {
   border: 1px solid #303030;
   padding: 1rem;
   height: 150px;
+}
+
+.character {
+  width: auto;
+  height: 100%;
 }
