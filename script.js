@@ -8,6 +8,7 @@
 
 // Step 1: Grab DOM elements.
 const scoreElement = document.getElementById("score");
+const streakElement = document.getElementById("streak");
 const timerElement = document.getElementById("timer");
 const healthElement = document.getElementById("health");
 const startButton = document.getElementById("start-button");
@@ -21,6 +22,7 @@ let timeLeft = 60;
 let health = 3;
 let isGameRunning = false;
 let spawnInterval = null;
+let countdownInterval = null;
 
 function startGame() {
   if (isGameRunning === true) {
@@ -30,10 +32,12 @@ function startGame() {
   isGameRunning = true;
   updateStatusText();
   startCountdown();
-  spawnCharacter();
+  startSpawnLoop();
 }
 
 function endGame() {
+  stopSpawnLoop();
+  clearInterval(countdownInterval);
   statusMessage.innerHTML = `Game Over! Final Score: ${score}`;
 }
 
@@ -44,6 +48,8 @@ function resetGame() {
   health = 3;
   isGameRunning = false;
   startButton.textContent = "Start Game";
+  stopSpawnLoop();
+  clearInterval(countdownInterval);
   updateScore();
   updateTimer();
   updateHealth();
@@ -57,6 +63,10 @@ resetButton.addEventListener("click", resetGame);
 // Update UI Functions
 function updateScore() {
   scoreElement.innerHTML = `Score: ${score}`;
+}
+
+function updateStreak() {
+  streakElement.innerHTML = `Streak: ${streak}`;
 }
 
 function updateTimer() {
@@ -79,13 +89,13 @@ function updateStatusText() {
 function startCountdown() {
   if (isGameRunning === false) return;
 
-  const timerInterval = setInterval(() => {
+  countdownInterval = setInterval(() => {
     timeLeft -= 1;
 
     if (timeLeft <= 0) {
       timeLeft = 0; // clamp at 0
       updateTimer();
-      clearInterval(timerInterval);
+      clearInterval(countdownInterval);
       isGameRunning = false;
       endGame();
       return;
@@ -95,6 +105,17 @@ function startCountdown() {
   }, 1000);
 }
 
+function startSpawnLoop() {
+  spawnInterval = setInterval(() => {
+    spawnCharacter();
+  }, 1500);
+}
+
+function stopSpawnLoop() {
+  clearInterval(spawnInterval);
+  spawnInterval = null;
+}
+
 function spawnCharacter() {
   const selectedHole = chooseRandomHole();
   const selectedCharacter = chooseRandomCharacter();
@@ -102,8 +123,12 @@ function spawnCharacter() {
 }
 
 function chooseRandomHole() {
-  const randomHoleIndex = Math.floor(Math.random() * holes.length);
-  return holes[randomHoleIndex];
+  const emptyHoles = Array.from(holes).filter((hole) => hole.innerHTML === "");
+  if (emptyHoles.length === 0) {
+    return null; // No empty holes available
+  }
+  const randomHoleIndex = Math.floor(Math.random() * emptyHoles.length);
+  return emptyHoles[randomHoleIndex];
 }
 
 const characters = ["stormtrooper", "grogu"];
@@ -118,6 +143,47 @@ function characterAppears(hole, character) {
   setTimeout(() => {
     hole.innerHTML = ""; // Clear the hole after 5 seconds
   }, 5000);
+}
+
+// Player interaction logic
+// handleHoleClick() | event listener for hole clicks to determine if player hit active character, update score and streak, apply penalties, and check for game over condition
+
+function handleHoleClick(event) {
+  const hole = event.currentTarget;
+  const characterImg = hole.querySelector("img");
+
+  if (characterImg.alt === "stormtrooper") {
+    // Hit on active character
+    score += 10;
+    streak += 1;
+    updateScore();
+    updateStreak();
+    hole.innerHTML = ""; // Clear the hole
+  }
+  if (characterImg.alt === "grogu") {
+    score += 0;
+    streak = 0;
+    updateStreak();
+    damageHealth();
+    hole.innerHTML = ""; // Clear the hole
+  }
+}
+
+// Attach event listeners to each hole
+holes.forEach((hole) => {
+  hole.addEventListener("click", handleHoleClick);
+});
+
+function damageHealth() {
+  health -= 1;
+  updateHealth();
+  if (health <= 0) {
+    health = 0;
+    timeLeft = 0;
+    updateHealth();
+    isGameRunning = false;
+    endGame();
+  }
 }
 
 resetGame();
