@@ -17,6 +17,58 @@ const resetButton = document.getElementById("reset-button");
 const statusMessage = document.getElementById("status-message");
 const holes = document.querySelectorAll(".hole");
 
+//UI Enhancements
+const targetUI = document.querySelectorAll(".hole");
+const redCrosshair =
+  "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'><line x1='20' y1='0' x2='20' y2='40' stroke='red' stroke-width='2'/><line x1='0' y1='20' x2='40' y2='20' stroke='red' stroke-width='2'/></svg>\") 20 20, crosshair";
+targetUI.forEach((hole) => {
+  hole.style.cursor = redCrosshair;
+});
+
+//Audio elements
+const blasterSFX = new Audio("Assets/Audio/sfx/sfx-blaster.mp3");
+const trooperHitSFX = new Audio("Assets/Audio/sfx/sfx-stormtrooper-hit.mp3");
+const groguHitSFX = new Audio("Assets/Audio/sfx/sfx-bad-baby.mp3");
+const gameOverSFX = new Audio("Assets/Audio/sfx/sfx-mando.mp3");
+const gameOverVoiceSFX = new Audio("Assets/Audio/sfx/sfx-mando-odds.mp3");
+const backgroundMusic = new Audio("Assets/Audio/music/bgm.mp3");
+
+function playBlasterSFX() {
+  blasterSFX.currentTime = 0; // Reset to start for rapid firing
+  blasterSFX.play();
+}
+
+function playTrooperHitSFX() {
+  trooperHitSFX.currentTime = 0;
+  trooperHitSFX.play();
+}
+
+function playGroguHitSFX() {
+  groguHitSFX.currentTime = 0;
+  groguHitSFX.play();
+}
+
+function playBackgroundMusic() {
+  backgroundMusic.loop = true;
+  backgroundMusic.volume = 0.4;
+  backgroundMusic.play();
+}
+
+function stopBackgroundMusic() {
+  backgroundMusic.pause();
+  backgroundMusic.currentTime = 0;
+}
+
+function playGameOverSFX() {
+  gameOverSFX.currentTime = 0;
+  gameOverSFX.play();
+}
+
+function playGameOverVoiceSFX() {
+  gameOverVoiceSFX.currentTime = 0;
+  gameOverVoiceSFX.play();
+}
+
 // Initial Values
 let score = 0;
 let timeLeft = 60;
@@ -36,12 +88,18 @@ function startGame() {
   updateStatusText();
   startCountdown();
   startSpawnLoop();
+  playBackgroundMusic();
 }
 
 function endGame() {
   stopSpawnLoop();
+  stopBackgroundMusic();
   clearInterval(countdownInterval);
   statusMessage.innerHTML = `Game Over! Final Score: ${score}`;
+  playGameOverSFX();
+  setTimeout(() => {
+    playGameOverVoiceSFX(); // play 2s later
+  }, 1000);
 }
 
 // Step 3: Reset puts everything back to default.
@@ -54,6 +112,7 @@ function resetGame() {
   isGameRunning = false;
   startButton.textContent = "Start Game";
   stopSpawnLoop();
+  stopBackgroundMusic();
   clearInterval(countdownInterval);
   updateScore();
   updateTimer();
@@ -151,7 +210,7 @@ function chooseRandomCharacter() {
 }
 
 function characterAppears(hole, character) {
-  hole.innerHTML = `<img src="/Assets/image/characters/${character}.png" alt="${character}" class="character">`;
+  hole.innerHTML = `<img src="/Assets/image/characters/${character}.png" alt="${character}" class="character" draggable="false"/>`;
   const img = hole.querySelector("img");
   setTimeout(() => {
     characterExits(hole, img);
@@ -159,14 +218,13 @@ function characterAppears(hole, character) {
 }
 
 function characterExits(hole, img) {
+  hole.classList.add("is-closing");
   img.classList.add("characterExit");
 
   img.addEventListener(
     "animationend",
     () => {
-      if (hole.contains(img)) {
-        hole.innerHTML = "";
-      }
+      hole.innerHTML = "";
     },
     { once: true },
   );
@@ -176,19 +234,28 @@ function characterExits(hole, img) {
 function handleHoleClick(event) {
   const hole = event.currentTarget;
   const characterImg = hole.querySelector("img");
+  playBlasterSFX();
+
+  // Missed hit
+  if (!characterImg) {
+    streak = 0;
+    updateStreak();
+    return;
+  }
 
   if (characterImg.alt === "stormtrooper") {
     // Hit on active character
     score += 10;
     streak += 1;
+    playTrooperHitSFX();
     updateScore();
     updateStreak();
     updateMaxStreak();
     hole.innerHTML = ""; // Clear the hole
-  }
-  if (characterImg.alt === "grogu") {
+  } else if (characterImg.alt === "grogu") {
     score += 0;
     streak = 0;
+    playGroguHitSFX();
     updateStreak();
     damageHealth();
     hole.innerHTML = ""; // Clear the hole
