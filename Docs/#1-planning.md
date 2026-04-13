@@ -9,7 +9,7 @@ Game runs as follows
   - Lose condition - When timer runs out || when player runs out of health.
 - Enemies of different variety will appear in random intervals. Certain enemies will give you more points. Will use timeout or time interval function to control appearance (timeout) or (time interval?)
   - a legend component or how-to modal will explain amount of points being rewarded.
-- Penalties: good-guy characters ‘grogu’ will appear randomly. If hit, it will reduce your available time. If hit 3 times, game is over.
+- Penalties: good-guy characters ‘grogu’ will appear randomly. If hit, it will reduce your health.
 
 ## MVP
 

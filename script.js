@@ -15,12 +15,15 @@ const healthElement = document.getElementById("health");
 const startButton = document.getElementById("start-button");
 const resetButton = document.getElementById("reset-button");
 const statusMessage = document.getElementById("status-message");
+const startScreen = document.getElementById("start-screen");
+const gameBoard = document.getElementById("game-board");
+const gameOverScreen = document.getElementById("game-over-screen");
 const holes = document.querySelectorAll(".hole");
 
 //UI Enhancements
 const targetUI = document.querySelectorAll(".hole");
 const redCrosshair =
-  "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'><line x1='20' y1='0' x2='20' y2='40' stroke='red' stroke-width='2'/><line x1='0' y1='20' x2='40' y2='20' stroke='red' stroke-width='2'/></svg>\") 20 20, crosshair";
+  "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'><line x1='20' y1='0' x2='20' y2='40' stroke='%2347FF22' stroke-width='4'/><line x1='0' y1='20' x2='40' y2='20' stroke='%2347FF22' stroke-width='4'/></svg>\") 20 20, crosshair";
 targetUI.forEach((hole) => {
   hole.style.cursor = redCrosshair;
 });
@@ -85,6 +88,8 @@ function startGame() {
     return;
   }
   isGameRunning = true;
+  gameBoard.style.display = "grid";
+  startScreen.style.display = "none";
   updateStatusText();
   startCountdown();
   startSpawnLoop();
@@ -92,6 +97,8 @@ function startGame() {
 }
 
 function endGame() {
+  gameBoard.style.display = "none";
+  gameOverScreen.style.display = "block";
   stopSpawnLoop();
   stopBackgroundMusic();
   clearInterval(countdownInterval);
@@ -111,6 +118,8 @@ function resetGame() {
   maxStreak = 0;
   isGameRunning = false;
   startButton.textContent = "Start Game";
+  gameBoard.style.display = "none";
+  startScreen.style.display = "block";
   stopSpawnLoop();
   stopBackgroundMusic();
   clearInterval(countdownInterval);

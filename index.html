@@ -8,19 +8,67 @@
   </head>
   <body>
     <main>
+      <div id="game-dashboard" class="game-dashboard">
+      <h1>SW Bounty Hunter</h1>
       <!-- Game Info Panel -->
-      <div id="game-info" class="container">
-        <h1>SW Bounty Hunter</h1>
+       <div class="dashboard-container">
+        <div id="game-info" class="dashboard-wrapper">
+
         <div id="timer">Time Left: 20s</div>
           <div id="health">Health: 1</div>
          <div id="score">Score: 5</div>
         <div id="streak">Streak: 0 </div>
         <div id="max-streak">Max Streak: 0 </div>
-        <button id="start-button">Start Game</button>
+        <!-- <button id="start-button">Start Game</button> -->
         <button id="reset-button">Reset Game</button>
         <div id="status-message"></div>
       </div>
+
+
+       <!-- Legend side panel with character icons and descriptions -->
+      <div id="legend" class="dashboard-wrapper">
+        <h2>Legend</h2>
+        <div class="legend-item">
+          <span class="legend-character stormtrooper"></span>
+          <span>Stormtrooper: 10 points</span>
+        </div>
+        <div class="legend-item">
+          <span class="legend-character commander"></span>
+          <span>Commander:+5 Seconds</span>
+        </div>
+        <div class="legend-item">
+          <span class="legend-character death-trooper"></span>
+          <span>Death Trooper: -1 health</span>
+        </div>
+        <div class="legend-item">
+          <span class="legend-character grogu"></span>
+          <span>Grogu: Game over</span>
+        </div>
+         <div class="legend-item">
+          <span class="legend-character jabba"></span>
+          <span>Grogu: Game over</span>
+        </div>
+        <div class="legend-item">
+          <span class="legend-character armorer"></span>
+          <span>The Armorer: 40 points, no health change</span>
+        </div>
+      </div>
+       </div>
+     
+      </div>
+
       
+      <!-- Default Screen -->
+      <div id="start-screen" class="container">
+        <h2>Welcome to SW Bounty Hunter!</h2>
+        <h3>How to Play:</h3>
+        <ul>
+          <li>Click on the characters that pop up in the holes to earn points.</li>
+          <li>Each character has a different point value and health effect.</li>
+          <li>Try to get the highest score before time runs out!</li>
+        <button id="start-button">Start Game</button>
+      </div>
+
       <!-- Game Board -->
       <div id="game-board" class="container">
         <div class="hole is-closing"></div>
@@ -33,30 +81,16 @@
         <div class="hole is-closing"></div>
         <div class="hole is-closing"></div>
       </div>
-      
-      <!-- Legend side panel with character icons and descriptions -->
-      <div id="legend" class="container">
-        <h2>Legend</h2>
-        <div class="legend-item">
-          <span class="legend-character stormtrooper"></span>
-          <span>Stormtrooper: 10 points, -1 health</span>
-        </div>
-        <div class="legend-item">
-          <span class="legend-character commander"></span>
-          <span>Commander: 20 points, -1 health</span>
-        </div>
-        <div class="legend-item">
-          <span class="legend-character death-trooper"></span>
-          <span>Death Trooper: 30 points, -1 health</span>
-        </div>
-        <div class="legend-item">
-          <span class="legend-character grogu"></span>
-          <span>Grogu: 50 points, +1 health</span>
-        </div>
-        <div class="legend-item">
-          <span class="legend-character armorer"></span>
-          <span>The Armorer: 40 points, no health change</span>
-        </div>
+
+      <!-- Game Over Screen -->
+      <div id="game-over-screen" class="container">
+        <h2>Game Over!</h2>
+        <p>Final Score: <span id="final-score">0</span></p>
+        <p>Max Streak: <span id="final-max-streak">0</span></p></p>
+         <!-- <button id="reset-button">Play Again</button> -->
+      </div>
+
+     
     </main>
     <script src="script.js"></script>
   </body>

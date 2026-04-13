@@ -2,6 +2,15 @@
   box-sizing: border-box;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+}
+
 body {
   margin: 0;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
@@ -17,6 +26,37 @@ body {
   border: 1px solid #e5e7eb;
   border-radius: 12px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+}
+
+.game-dashboard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 1440px;
+  padding: 1rem;
+  margin: 4rem auto;
+  background: #eeeeee;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+}
+
+.dashboard-container {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  max-width: 1440px;
+  padding: 1rem;
+  width: 100%;
+  gap: 1rem;
+}
+
+.dashboard-wrapper {
+  width: 100%;
+  max-width: 1440px;
+  padding: 1rem;
+  background: #eeeeee;
+  border: 1px solid #000000;
+  border-radius: 12px;
 }
 
 h1 {
@@ -44,10 +84,14 @@ button:hover {
 }
 
 #game-board {
-  display: grid;
+  display: none;
   grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
   margin-top: 2rem;
+}
+
+#game-over-screen {
+  display: none;
 }
 
 .hole {
