@@ -9,6 +9,7 @@
 // Step 1: Grab DOM elements.
 const scoreElement = document.getElementById("score");
 const streakElement = document.getElementById("streak");
+const maxStreakElement = document.getElementById("max-streak");
 const timerElement = document.getElementById("timer");
 const healthElement = document.getElementById("health");
 const startButton = document.getElementById("start-button");
@@ -20,6 +21,8 @@ const holes = document.querySelectorAll(".hole");
 let score = 0;
 let timeLeft = 60;
 let health = 3;
+let streak = 0;
+let maxStreak = 0;
 let isGameRunning = false;
 let spawnInterval = null;
 let countdownInterval = null;
@@ -46,6 +49,8 @@ function resetGame() {
   score = 0;
   timeLeft = 60;
   health = 3;
+  streak = 0;
+  maxStreak = 0;
   isGameRunning = false;
   startButton.textContent = "Start Game";
   stopSpawnLoop();
@@ -67,6 +72,13 @@ function updateScore() {
 
 function updateStreak() {
   streakElement.innerHTML = `Streak: ${streak}`;
+}
+
+function updateMaxStreak() {
+  if (streak > maxStreak) {
+    maxStreak = streak;
+    maxStreakElement.innerHTML = `Max Streak: ${maxStreak}`;
+  }
 }
 
 function updateTimer() {
@@ -140,14 +152,27 @@ function chooseRandomCharacter() {
 
 function characterAppears(hole, character) {
   hole.innerHTML = `<img src="/Assets/image/characters/${character}.png" alt="${character}" class="character">`;
+  const img = hole.querySelector("img");
   setTimeout(() => {
-    hole.innerHTML = ""; // Clear the hole after 5 seconds
+    characterExits(hole, img);
   }, 5000);
 }
 
-// Player interaction logic
-// handleHoleClick() | event listener for hole clicks to determine if player hit active character, update score and streak, apply penalties, and check for game over condition
+function characterExits(hole, img) {
+  img.classList.add("characterExit");
 
+  img.addEventListener(
+    "animationend",
+    () => {
+      if (hole.contains(img)) {
+        hole.innerHTML = "";
+      }
+    },
+    { once: true },
+  );
+}
+
+// Player interaction logic
 function handleHoleClick(event) {
   const hole = event.currentTarget;
   const characterImg = hole.querySelector("img");
@@ -158,6 +183,7 @@ function handleHoleClick(event) {
     streak += 1;
     updateScore();
     updateStreak();
+    updateMaxStreak();
     hole.innerHTML = ""; // Clear the hole
   }
   if (characterImg.alt === "grogu") {

@@ -46,10 +46,37 @@ button:hover {
 .hole {
   border: 1px solid #303030;
   padding: 1rem;
-  height: 150px;
+  height: 400px;
+  position: relative;
+  overflow: hidden;
 }
 
 .character {
   width: auto;
   height: 100%;
+  position: absolute;
+  bottom: 0;
+  transform: translate(0, 110%);
+  animation: slideUp 0.3s ease-out forwards;
+}
+
+.characterExit {
+  animation: slideDown 0.3s ease-out forwards;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translate(0, 110%);
+  }
+  to {
+    transform: translate(0, 0);
+  }
+}
+@keyframes slideDown {
+  from {
+    transform: translate(0, 0);
+  }
+  to {
+    transform: translate(0, 110%);
+  }
 }

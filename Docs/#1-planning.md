@@ -46,8 +46,7 @@ Game runs as follows
 
 - spawnCharacter() | randomly select a character and display it in an active hole
 - chooseCharacter() | determine which character to spawn based on math.random()
-- characterActive() | toggle class name to show character in hole and store activeHoleIndex and currentCharacter
-- characterInactive() | toggle class name to hide character in hole and clear activeHoleIndex and currentCharacter
+- slideCharacterUp() | toggle class name to show character image sliding up from hole
 - characterSetInterval()| for spawnCharacter() to run at random intervals between 500ms to 800ms while isGameRunning is true
 - characterSetTimeout() | to hide character after a certain amount of time (300ms) if not hit by player
 
