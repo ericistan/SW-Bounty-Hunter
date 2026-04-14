@@ -220,7 +220,7 @@ function startCountdown() {
 function startSpawnLoop() {
   spawnInterval = setInterval(() => {
     spawnCharacter();
-  }, 700);
+  }, 650);
 }
 
 function stopSpawnLoop() {
@@ -275,9 +275,9 @@ function chooseRandomCharacter() {
 }
 
 const duration = {
-  stormtrooper: 1000,
+  stormtrooper: 1100,
   grogu: 2000,
-  hutt: 700,
+  hutt: 800,
   darktrooper: 800,
 };
 
