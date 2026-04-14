@@ -4,12 +4,19 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SW Bounty Hunter</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
+  
     <main>
-      <div id="game-dashboard" class="game-dashboard">
+        <div class="starfield">
+          <div class="game-dashboard-wrapper">
+  <div id="game-dashboard" class="game-dashboard">
       <h1>SW Bounty Hunter</h1>
+      
       <!-- Game Info Panel -->
        <div class="dashboard-container">
         <div id="game-info" class="dashboard-wrapper">
@@ -33,29 +40,22 @@
           <span>Stormtrooper: 10 points</span>
         </div>
         <div class="legend-item">
-          <span class="legend-character commander"></span>
-          <span>Commander:+5 Seconds</span>
-        </div>
-        <div class="legend-item">
           <span class="legend-character death-trooper"></span>
-          <span>Death Trooper: -1 health</span>
+          <span>Death Trooper: 20 points</span>
         </div>
         <div class="legend-item">
           <span class="legend-character grogu"></span>
-          <span>Grogu: Game over</span>
+          <span>Hutt: +5 Seconds</span>
         </div>
          <div class="legend-item">
           <span class="legend-character jabba"></span>
-          <span>Grogu: Game over</span>
-        </div>
-        <div class="legend-item">
-          <span class="legend-character armorer"></span>
-          <span>The Armorer: 40 points, no health change</span>
+          <span>Grogu: -1 Health</span>
         </div>
       </div>
        </div>
-     
       </div>
+          </div>
+    
 
       
       <!-- Default Screen -->
@@ -66,7 +66,7 @@
           <li>Click on the characters that pop up in the holes to earn points.</li>
           <li>Each character has a different point value and health effect.</li>
           <li>Try to get the highest score before time runs out!</li>
-        <button id="start-button">Start Game</button>
+        <button id="start-button" class="starfield-origin">Start Game</button>
       </div>
 
       <!-- Game Board -->
@@ -85,13 +85,17 @@
       <!-- Game Over Screen -->
       <div id="game-over-screen" class="container">
         <h2>Game Over!</h2>
-        <p>Final Score: <span id="final-score">0</span></p>
-        <p>Max Streak: <span id="final-max-streak">0</span></p></p>
+        <p id="final-score"></p>
+        <p id="final-max-streak"></p>
          <!-- <button id="reset-button">Play Again</button> -->
       </div>
 
-     
+    </div>
     </main>
     <script src="script.js"></script>
+    <script src="starfield.js"></script>
+<script>
+  Starfield.setup();
+</script>
   </body>
 </html>

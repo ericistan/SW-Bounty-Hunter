@@ -18,6 +18,9 @@ const statusMessage = document.getElementById("status-message");
 const startScreen = document.getElementById("start-screen");
 const gameBoard = document.getElementById("game-board");
 const gameOverScreen = document.getElementById("game-over-screen");
+const gameOverScore = document.getElementById("final-score");
+const gameOverMaxStreak = document.getElementById("final-max-streak");
+
 const holes = document.querySelectorAll(".hole");
 
 //UI Enhancements
@@ -31,6 +34,9 @@ targetUI.forEach((hole) => {
 //Audio elements
 const blasterSFX = new Audio("Assets/Audio/sfx/sfx-blaster.mp3");
 const trooperHitSFX = new Audio("Assets/Audio/sfx/sfx-stormtrooper-hit.mp3");
+const darkTrooperHitSFX = new Audio("Assets/Audio/sfx/sfx-darktrooper.mp3");
+const jabbaHitSFX = new Audio("Assets/Audio/sfx/sfx-jabba.mp3");
+const timeRechargeSFX = new Audio("Assets/Audio/sfx/sfx-armorer.mp3");
 const groguHitSFX = new Audio("Assets/Audio/sfx/sfx-bad-baby.mp3");
 const gameOverSFX = new Audio("Assets/Audio/sfx/sfx-mando.mp3");
 const gameOverVoiceSFX = new Audio("Assets/Audio/sfx/sfx-mando-odds.mp3");
@@ -49,6 +55,22 @@ function playTrooperHitSFX() {
 function playGroguHitSFX() {
   groguHitSFX.currentTime = 0;
   groguHitSFX.play();
+}
+
+function playDarkTrooperHitSFX() {
+  darkTrooperHitSFX.currentTime = 0;
+  backgroundMusic.volume = 0.4;
+  darkTrooperHitSFX.play();
+}
+
+function playJabbaHitSFX() {
+  jabbaHitSFX.currentTime = 0;
+  jabbaHitSFX.play();
+}
+
+function playTimeRechargeSFX() {
+  timeRechargeSFX.currentTime = 0;
+  timeRechargeSFX.play();
 }
 
 function playBackgroundMusic() {
@@ -83,10 +105,6 @@ let spawnInterval = null;
 let countdownInterval = null;
 
 function startGame() {
-  if (isGameRunning === true) {
-    startButton.textContent = "Game Running";
-    return;
-  }
   isGameRunning = true;
   gameBoard.style.display = "grid";
   startScreen.style.display = "none";
@@ -97,13 +115,12 @@ function startGame() {
 }
 
 function endGame() {
-  gameBoard.style.display = "none";
-  gameOverScreen.style.display = "block";
   stopSpawnLoop();
   stopBackgroundMusic();
   clearInterval(countdownInterval);
   statusMessage.innerHTML = `Game Over! Final Score: ${score}`;
   playGameOverSFX();
+  showGameOverScreen();
   setTimeout(() => {
     playGameOverVoiceSFX(); // play 2s later
   }, 1000);
@@ -129,9 +146,15 @@ function resetGame() {
   updateStatusText();
 }
 
-// Step 1: Wire button clicks after functions are defined.
 startButton.addEventListener("click", startGame);
 resetButton.addEventListener("click", resetGame);
+
+function showGameOverScreen() {
+  gameOverScore.innerHTML = `Final Score: ${score}`;
+  gameOverMaxStreak.innerHTML = `Max Streak: ${maxStreak}`;
+  gameBoard.style.display = "none";
+  gameOverScreen.style.display = "block";
+}
 
 // Update UI Functions
 function updateScore() {
@@ -188,7 +211,7 @@ function startCountdown() {
 function startSpawnLoop() {
   spawnInterval = setInterval(() => {
     spawnCharacter();
-  }, 1500);
+  }, 800);
 }
 
 function stopSpawnLoop() {
@@ -211,23 +234,55 @@ function chooseRandomHole() {
   return emptyHoles[randomHoleIndex];
 }
 
-const characters = ["stormtrooper", "grogu"];
+// const characters = [
+//   "stormtrooper",
+//   "grogu",
+//   // "thearmorer",
+//   "hutt",
+//   "darktrooper",
+// ];
 
+const characterWeights = {
+  stormtrooper: 55,
+  grogu: 15,
+  hutt: 10,
+  darktrooper: 15,
+};
+
+//read up destructiuring assignment and reduce method for arrays to understand this function better. It allows us to assign different probabilities to each character spawn, making the game more dynamic and challenging. The weights can be adjusted to make certain characters appear more or less frequently based on desired difficulty and gameplay experience.
+//try out console.log with the entries and totalWeight variables to see how they work!
 function chooseRandomCharacter() {
-  const randomCharacterIndex = Math.floor(Math.random() * characters.length);
-  return characters[randomCharacterIndex];
+  const entries = Object.entries(characterWeights); //converts KVP to aray
+  const totalWeight = entries.reduce((sum, [_, weight]) => sum + weight, 0);
+
+  let randomNum = Math.random() * totalWeight;
+
+  for (const [character, weight] of entries) {
+    if (randomNum < weight) {
+      return character; // This still returns "stormtrooper", "grogu", etc.
+    }
+    randomNum -= weight;
+  }
 }
+
+const duration = {
+  stormtrooper: 1200,
+  grogu: 2000,
+  hutt: 800,
+  darktrooper: 1000,
+};
 
 function characterAppears(hole, character) {
   hole.innerHTML = `<img src="/Assets/image/characters/${character}.png" alt="${character}" class="character" draggable="false"/>`;
   const img = hole.querySelector("img");
+  let timeLimit = duration[character];
   setTimeout(() => {
     characterExits(hole, img);
-  }, 5000);
+  }, timeLimit);
+  //if you want diff characters to staggger differently..think of 1500 as a var.
 }
 
 function characterExits(hole, img) {
-  hole.classList.add("is-closing");
   img.classList.add("characterExit");
 
   img.addEventListener(
@@ -243,12 +298,11 @@ function characterExits(hole, img) {
 function handleHoleClick(event) {
   const hole = event.currentTarget;
   const characterImg = hole.querySelector("img");
-  playBlasterSFX();
-
   // Missed hit
   if (!characterImg) {
     streak = 0;
     updateStreak();
+    playBlasterSFX();
     return;
   }
 
@@ -256,18 +310,43 @@ function handleHoleClick(event) {
     // Hit on active character
     score += 10;
     streak += 1;
+    playBlasterSFX();
     playTrooperHitSFX();
     updateScore();
     updateStreak();
     updateMaxStreak();
-    hole.innerHTML = ""; // Clear the hole
+    hole.innerHTML = "";
   } else if (characterImg.alt === "grogu") {
     score += 0;
     streak = 0;
     playGroguHitSFX();
     updateStreak();
     damageHealth();
-    hole.innerHTML = ""; // Clear the hole
+    hole.innerHTML = "";
+  }
+  // else if (characterImg.alt === "thearmorer") {
+  //   timeLeft += 5;
+  //   playTimeRechargeSFX();
+  //   updateTimer();
+  //   hole.innerHTML = "";
+  // }
+  else if (characterImg.alt === "hutt") {
+    timeLeft += 5;
+    streak += 1;
+    playBlasterSFX();
+    playJabbaHitSFX();
+    updateStreak();
+    updateMaxStreak();
+    hole.innerHTML = "";
+  } else if (characterImg.alt === "darktrooper") {
+    score += 20;
+    streak += 1;
+    playBlasterSFX();
+    playDarkTrooperHitSFX();
+    updateScore();
+    updateStreak();
+    updateMaxStreak();
+    hole.innerHTML = "";
   }
 }
 
