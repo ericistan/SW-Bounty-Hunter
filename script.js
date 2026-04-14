@@ -20,6 +20,11 @@ const gameBoard = document.getElementById("game-board");
 const gameOverScreen = document.getElementById("game-over-screen");
 const gameOverScore = document.getElementById("final-score");
 const gameOverMaxStreak = document.getElementById("final-max-streak");
+const scoreValueElement = document.querySelector("#score p");
+const streakValueElement = document.querySelector("#streak p");
+const maxStreakValueElement = document.querySelector("#max-streak p");
+const timerValueElement = document.querySelector("#timer p");
+const healthValueElement = document.querySelector("#health p");
 
 const holes = document.querySelectorAll(".hole");
 
@@ -118,7 +123,7 @@ function endGame() {
   stopSpawnLoop();
   stopBackgroundMusic();
   clearInterval(countdownInterval);
-  statusMessage.innerHTML = `Game Over! Final Score: ${score}`;
+  statusMessage.innerHTML = `<h2>Game Over!</h2>`;
   playGameOverSFX();
   showGameOverScreen();
   setTimeout(() => {
@@ -136,11 +141,15 @@ function resetGame() {
   isGameRunning = false;
   startButton.textContent = "Start Game";
   gameBoard.style.display = "none";
-  startScreen.style.display = "block";
+  startScreen.style.display = "flex";
+  gameOverScore.innerHTML = ``;
+  gameOverMaxStreak.innerHTML = ``;
   stopSpawnLoop();
   stopBackgroundMusic();
   clearInterval(countdownInterval);
   updateScore();
+  updateStreak();
+  updateMaxStreak();
   updateTimer();
   updateHealth();
   updateStatusText();
@@ -158,26 +167,26 @@ function showGameOverScreen() {
 
 // Update UI Functions
 function updateScore() {
-  scoreElement.innerHTML = `Score: ${score}`;
+  scoreValueElement.textContent = String(score);
 }
 
 function updateStreak() {
-  streakElement.innerHTML = `Streak: ${streak}`;
+  streakValueElement.textContent = String(streak);
 }
 
 function updateMaxStreak() {
   if (streak > maxStreak) {
     maxStreak = streak;
-    maxStreakElement.innerHTML = `Max Streak: ${maxStreak}`;
   }
+  maxStreakValueElement.textContent = String(maxStreak);
 }
 
 function updateTimer() {
-  timerElement.innerHTML = `Time Left: ${timeLeft}s`;
+  timerValueElement.textContent = `${timeLeft}s`;
 }
 
 function updateHealth() {
-  healthElement.innerHTML = `Health: ${health}`;
+  healthValueElement.textContent = String(health);
 }
 
 function updateStatusText() {
@@ -211,7 +220,7 @@ function startCountdown() {
 function startSpawnLoop() {
   spawnInterval = setInterval(() => {
     spawnCharacter();
-  }, 800);
+  }, 700);
 }
 
 function stopSpawnLoop() {
@@ -244,8 +253,8 @@ function chooseRandomHole() {
 
 const characterWeights = {
   stormtrooper: 55,
-  grogu: 15,
-  hutt: 10,
+  grogu: 20,
+  hutt: 5,
   darktrooper: 15,
 };
 
@@ -266,10 +275,10 @@ function chooseRandomCharacter() {
 }
 
 const duration = {
-  stormtrooper: 1200,
+  stormtrooper: 1000,
   grogu: 2000,
-  hutt: 800,
-  darktrooper: 1000,
+  hutt: 700,
+  darktrooper: 800,
 };
 
 function characterAppears(hole, character) {
@@ -339,7 +348,7 @@ function handleHoleClick(event) {
     updateMaxStreak();
     hole.innerHTML = "";
   } else if (characterImg.alt === "darktrooper") {
-    score += 20;
+    score += 50;
     streak += 1;
     playBlasterSFX();
     playDarkTrooperHitSFX();

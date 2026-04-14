@@ -4,98 +4,132 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SW Bounty Hunter</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-  
     <main>
-        <div class="starfield">
-          <div class="game-dashboard-wrapper">
-  <div id="game-dashboard" class="game-dashboard">
-      <h1>SW Bounty Hunter</h1>
-      
-      <!-- Game Info Panel -->
-       <div class="dashboard-container">
-        <div id="game-info" class="dashboard-wrapper">
-
-        <div id="timer">Time Left: 20s</div>
-          <div id="health">Health: 1</div>
-         <div id="score">Score: 5</div>
-        <div id="streak">Streak: 0 </div>
-        <div id="max-streak">Max Streak: 0 </div>
-        <!-- <button id="start-button">Start Game</button> -->
-        <button id="reset-button">Reset Game</button>
-        <div id="status-message"></div>
-      </div>
-
-
-       <!-- Legend side panel with character icons and descriptions -->
-      <div id="legend" class="dashboard-wrapper">
-        <h2>Legend</h2>
-        <div class="legend-item">
-          <span class="legend-character stormtrooper"></span>
-          <span>Stormtrooper: 10 points</span>
-        </div>
-        <div class="legend-item">
-          <span class="legend-character death-trooper"></span>
-          <span>Death Trooper: 20 points</span>
-        </div>
-        <div class="legend-item">
-          <span class="legend-character grogu"></span>
-          <span>Hutt: +5 Seconds</span>
-        </div>
-         <div class="legend-item">
-          <span class="legend-character jabba"></span>
-          <span>Grogu: -1 Health</span>
-        </div>
-      </div>
-       </div>
-      </div>
+      <div class="starfield">
+        <div class="game-dashboard-wrapper">
+          <div id="game-dashboard" class="game-dashboard">
+            <h1>----- SW BOUNTY HUNTER -----</h1>
+            <!-- Game Info Panel -->
+            <div class="dashboard-container">
+              <div id="game-info">
+                <div id="timer" class="game-info-item">
+                  <h3>TIME</h3>
+                  <p>20s</p>
+                </div>
+                <div id="score" class="game-info-item">
+                  <h3>SCORE</h3>
+                  <p>5</p>
+                </div>
+                <div id="health" class="game-info-item">
+                  <h3>HEALTH</h3>
+                  <p>1</p>
+                </div>
+                <div id="streak" class="game-info-item">
+                  <h3>STREAK</h3>
+                  <p>0</p>
+                </div>
+                <div id="max-streak" class="game-info-item">
+                  <h3>MAX STREAK</h3>
+                  <p>0</p>
+                </div>
+                <!-- <button id="start-button">Start Game</button> -->
+              </div>
+            </div>
+            <div class="status-msg">
+              <div id="status-message"></div>
+              <p id="final-score"></p>
+              <p id="final-max-streak"></p>
+              <button id="reset-button" class="button-secondary">
+                Reset Game
+              </button>
+            </div>
           </div>
-    
+          <!-- Legend side panel with character icons and descriptions -->
 
-      
-      <!-- Default Screen -->
-      <div id="start-screen" class="container">
-        <h2>Welcome to SW Bounty Hunter!</h2>
-        <h3>How to Play:</h3>
-        <ul>
-          <li>Click on the characters that pop up in the holes to earn points.</li>
-          <li>Each character has a different point value and health effect.</li>
-          <li>Try to get the highest score before time runs out!</li>
-        <button id="start-button" class="starfield-origin">Start Game</button>
+          <div id="legend" class="dashboard-wrapper">
+            <div class="legend-item">
+              <img
+                class="legend-character"
+                src="/Assets/image/characters/stormtrooper.png"
+                alt="stormtrooper"
+              />
+              <p>Stormtrooper</p>
+              <p>10 points</p>
+            </div>
+            <div class="legend-item">
+              <img
+                class="legend-character"
+                src="/Assets/image/characters/darktrooper.png"
+                alt="darktrooper"
+              />
+              <p>Dark Trooper</p>
+              <p>50 points</p>
+            </div>
+
+            <div class="legend-item">
+              <img
+                class="legend-character"
+                src="
+                    /Assets/image/characters/hutt.png"
+                alt="hutt"
+              />
+              <p>Hutt</p>
+              <p>+5 Seconds</p>
+            </div>
+
+            <div class="legend-item">
+              <img
+                class="legend-character"
+                src="/Assets/image/characters/grogu.png"
+                alt="grogu"
+              />
+              <p>Grogu</p>
+              <p>-1 Health</p>
+            </div>
+          </div>
+        </div>
+        <!-- Default Screen -->
+        <div id="start-screen" class="container">
+          <h2>How to Play:</h2>
+          <ul>
+            <li>
+              Click on the characters that pop up in the holes to earn points.
+            </li>
+            <li>
+              Each character has a different point value and health effect.
+            </li>
+            <li>Try to get the highest score before time runs out!</li>
+          </ul>
+          <button id="start-button" class="starfield-origin">Start Game</button>
+        </div>
+
+        <!-- Game Board -->
+        <div id="game-board" class="container">
+          <div class="hole is-closing"></div>
+          <div class="hole is-closing"></div>
+          <div class="hole is-closing"></div>
+          <div class="hole is-closing"></div>
+          <div class="hole is-closing"></div>
+          <div class="hole is-closing"></div>
+          <div class="hole is-closing"></div>
+          <div class="hole is-closing"></div>
+          <div class="hole is-closing"></div>
+        </div>
       </div>
-
-      <!-- Game Board -->
-      <div id="game-board" class="container">
-        <div class="hole is-closing"></div>
-        <div class="hole is-closing"></div>
-        <div class="hole is-closing"></div>
-        <div class="hole is-closing"></div>
-        <div class="hole is-closing"></div>
-        <div class="hole is-closing"></div>
-        <div class="hole is-closing"></div>
-        <div class="hole is-closing"></div>
-        <div class="hole is-closing"></div>
-      </div>
-
-      <!-- Game Over Screen -->
-      <div id="game-over-screen" class="container">
-        <h2>Game Over!</h2>
-        <p id="final-score"></p>
-        <p id="final-max-streak"></p>
-         <!-- <button id="reset-button">Play Again</button> -->
-      </div>
-
-    </div>
     </main>
     <script src="script.js"></script>
     <script src="starfield.js"></script>
-<script>
-  Starfield.setup();
-</script>
+    <script>
+      Starfield.setup();
+    </script>
   </body>
 </html>
