@@ -121,6 +121,11 @@ li {
 }
 
 .how-to-play-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
   padding: 1rem;
   background: #0d1014;
   border: 4px solid #477d8548;
@@ -219,6 +224,11 @@ li {
 .intro-icon {
   width: 100px;
   height: 100px;
+  filter: drop-shadow(0 0 6px #5a9fad) brightness(1);
+}
+
+.hologram-ficker {
+  animation: hologramFlicker 15s infinite;
 }
 
 /* Game Holes & Characters */
@@ -375,6 +385,76 @@ button:hover {
   100% {
     color: #fafaf9b2;
     transform: scale(1);
+  }
+}
+
+@keyframes hologramFlicker {
+  0% {
+    opacity: 1;
+    transform: translateX(0);
+    filter: drop-shadow(0 0 6px #5a9fad) brightness(1);
+  }
+  2% {
+    opacity: 0.6;
+    transform: translateX(-2px);
+    filter: drop-shadow(0 0 12px #5a9fad) brightness(1.4);
+  }
+  3% {
+    opacity: 1;
+    transform: translateX(0);
+    filter: drop-shadow(0 0 6px #5a9fad) brightness(1);
+  }
+  20% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  21% {
+    opacity: 0.2;
+    transform: translateX(1px);
+    filter: drop-shadow(0 0 4px #477d85) brightness(0.9);
+  }
+  22% {
+    opacity: 1;
+    transform: translateX(0);
+    filter: drop-shadow(0 0 6px #5a9fad) brightness(1);
+  }
+  50% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  51% {
+    opacity: 0.7;
+    transform: translateX(-1px);
+    filter: drop-shadow(0 0 8px #5a9fad) brightness(1.2);
+  }
+  52% {
+    opacity: 1;
+    transform: translateX(0);
+    filter: drop-shadow(0 0 6px #5a9fad) brightness(1);
+  }
+  75% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  76% {
+    opacity: 0.1;
+    transform: translateX(1px);
+    filter: drop-shadow(0 0 16px #a2bbc1) brightness(1.3);
+  }
+  77% {
+    opacity: 0.8;
+    transform: translateX(-0.5px);
+    filter: drop-shadow(0 0 6px #5a9fad) brightness(1);
+  }
+  78% {
+    opacity: 1;
+    transform: translateX(0);
+    filter: drop-shadow(0 0 6px #5a9fad) brightness(1);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+    filter: drop-shadow(0 0 6px #5a9fad) brightness(1);
   }
 }
 

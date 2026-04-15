@@ -25,6 +25,7 @@ const streakValueElement = document.querySelector("#streak p");
 const maxStreakValueElement = document.querySelector("#max-streak p");
 const timerValueElement = document.querySelector("#timer p");
 const healthValueElement = document.querySelector("#health p");
+const startButtonElement = document.getElementById("start-button");
 
 const holes = document.querySelectorAll(".hole");
 
@@ -46,6 +47,7 @@ const groguHitSFX = new Audio("Assets/Audio/sfx/sfx-bad-baby.mp3");
 const gameOverSFX = new Audio("Assets/Audio/sfx/sfx-mando.mp3");
 const gameOverVoiceSFX = new Audio("Assets/Audio/sfx/sfx-mando-odds.mp3");
 const backgroundMusic = new Audio("Assets/Audio/music/bgm.mp3");
+const startButtonHoverSFX = new Audio("Assets/Audio/sfx/sfx-recharge.mp3");
 
 function playBlasterSFX() {
   blasterSFX.currentTime = 0; // Reset to start for rapid firing
@@ -99,6 +101,14 @@ function playGameOverVoiceSFX() {
   gameOverVoiceSFX.play();
 }
 
+function playStartButtonHoverSFX() {
+  startButtonHoverSFX.currentTime = 0;
+  startButtonHoverSFX.volume = 0.1;
+  startButtonHoverSFX.play();
+}
+
+startButton.addEventListener("mouseover", playStartButtonHoverSFX);
+
 // Initial Values
 let score = 0;
 let timeLeft = 60;
@@ -117,6 +127,7 @@ function startGame() {
   startCountdown();
   startSpawnLoop();
   playBackgroundMusic();
+  stopOpeningMusic();
 }
 
 function endGame() {
@@ -402,5 +413,4 @@ function damageHealth() {
     endGame();
   }
 }
-
 resetGame();
