@@ -141,7 +141,7 @@ function resetGame() {
   isGameRunning = false;
   startButton.textContent = "Start Game";
   gameBoard.style.display = "none";
-  startScreen.style.display = "flex";
+  startScreen.style.display = "grid";
   gameOverScore.innerHTML = ``;
   gameOverMaxStreak.innerHTML = ``;
   stopSpawnLoop();
