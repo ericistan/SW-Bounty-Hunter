@@ -17,7 +17,6 @@ const resetButton = document.getElementById("reset-button");
 const statusMessage = document.getElementById("status-message");
 const startScreen = document.getElementById("start-screen");
 const gameBoard = document.getElementById("game-board");
-const gameOverScreen = document.getElementById("game-over-screen");
 const gameOverScore = document.getElementById("final-score");
 const gameOverMaxStreak = document.getElementById("final-max-streak");
 const scoreValueElement = document.querySelector("#score p");
@@ -194,8 +193,6 @@ document.addEventListener(
 function showGameOverScreen() {
   gameOverScore.innerHTML = `Final Score: ${score}`;
   gameOverMaxStreak.innerHTML = `Max Streak: ${maxStreak}`;
-  // gameBoard.style.display = "none";
-  gameOverScreen.style.display = "block";
 }
 
 // Update UI Functions
