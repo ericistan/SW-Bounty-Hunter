@@ -153,6 +153,8 @@ li {
 #game-board {
   display: none;
   grid-template-columns: repeat(3, 1fr);
+  align-items: center;
+  justify-items: center;
   gap: 1rem;
   margin-top: 1rem;
   background-image: url(/Assets/image/game-board-bg.jpg);
@@ -165,6 +167,8 @@ li {
   flex-direction: row;
   justify-content: space-between;
   flex-wrap: wrap;
+  gap: 1rem;
+  text-align: center;
 }
 
 #game-over-screen {
@@ -180,6 +184,8 @@ li {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  flex: 1;
   border: 4px solid #477d8548;
   border-radius: 12px;
   padding: 0.375rem;
@@ -192,7 +198,7 @@ li {
 }
 
 .game-info-item p {
-  font-size: 2.5rem;
+  font-size: 3rem;
 }
 
 .status-msg {
@@ -250,10 +256,9 @@ li {
 .hole {
   display: flex;
   justify-content: center;
-  aspect-ratio: 4 / 3;
-  width: 400px;
+  width: 350px;
+  height: 18vh;
   border-radius: 100%;
-  height: 180px;
   position: relative;
   cursor: crosshair;
   overflow: hidden;
@@ -266,7 +271,7 @@ li {
 
 .character {
   width: auto;
-  height: 260px;
+  height: 26vh;
   position: absolute;
   bottom: -55%;
   transform: translate(0, 110%);

@@ -203,7 +203,7 @@ function updateStatusText() {
   if (isGameRunning === true) {
     statusMessage.innerHTML = "Let the bounty hunting begin!";
   } else {
-    statusMessage.innerHTML = "Press Start Game to begin.";
+    statusMessage.innerHTML = "Press Start Hunting to begin.";
   }
 }
 
@@ -251,7 +251,7 @@ function startCountdown() {
 function startSpawnLoop() {
   spawnInterval = setInterval(() => {
     spawnCharacter();
-  }, 650);
+  }, 800);
 }
 
 function stopSpawnLoop() {
@@ -283,8 +283,8 @@ function chooseRandomHole() {
 // ];
 
 const characterWeights = {
-  stormtrooper: 55,
-  grogu: 20,
+  stormtrooper: 58,
+  grogu: 17,
   hutt: 5,
   darktrooper: 15,
 };
