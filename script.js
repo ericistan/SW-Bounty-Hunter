@@ -133,7 +133,6 @@ function startGame() {
   startCountdown();
   startSpawnLoop();
   playBackgroundMusic();
-  stopOpeningMusic();
 }
 
 function endGame() {
