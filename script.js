@@ -123,7 +123,7 @@ function endGame() {
   stopSpawnLoop();
   stopBackgroundMusic();
   clearInterval(countdownInterval);
-  statusMessage.innerHTML = `<h2>Game Over!</h2>`;
+  statusMessage.innerHTML = `<h4>Game Over!</h4>`;
   playGameOverSFX();
   showGameOverScreen();
   setTimeout(() => {
@@ -139,7 +139,6 @@ function resetGame() {
   streak = 0;
   maxStreak = 0;
   isGameRunning = false;
-  startButton.textContent = "Start Game";
   gameBoard.style.display = "none";
   startScreen.style.display = "grid";
   gameOverScore.innerHTML = ``;
@@ -195,6 +194,27 @@ function updateStatusText() {
   } else {
     statusMessage.innerHTML = "Press Start Game to begin.";
   }
+}
+
+function timerFlashGreen() {
+  timerValueElement.classList.add("flash-green");
+  setTimeout(() => {
+    timerValueElement.classList.remove("flash-green");
+  }, 500);
+}
+
+function scoreFlashGreen() {
+  scoreValueElement.classList.add("flash-green");
+  setTimeout(() => {
+    scoreValueElement.classList.remove("flash-green");
+  }, 500);
+}
+
+function healthFlashRed() {
+  healthValueElement.classList.add("flash-red");
+  setTimeout(() => {
+    healthValueElement.classList.remove("flash-red");
+  }, 500);
 }
 
 //Countdown timer logic (called from startGame).
@@ -321,6 +341,8 @@ function handleHoleClick(event) {
     streak += 1;
     playBlasterSFX();
     playTrooperHitSFX();
+    scoreFlashGreen();
+    statusMessage.innerHTML = `<p class="text-green">Score +10</p>`;
     updateScore();
     updateStreak();
     updateMaxStreak();
@@ -342,8 +364,11 @@ function handleHoleClick(event) {
   else if (characterImg.alt === "hutt") {
     timeLeft += 5;
     streak += 1;
+    statusMessage.innerHTML = `<p class="text-green">Gained +5 Seconds</p>`;
+    timerFlashGreen();
     playBlasterSFX();
     playJabbaHitSFX();
+    updateTimer();
     updateStreak();
     updateMaxStreak();
     hole.innerHTML = "";
@@ -366,6 +391,8 @@ holes.forEach((hole) => {
 
 function damageHealth() {
   health -= 1;
+  statusMessage.innerHTML = `<p class="text-red">You hit the child -1 health.</p>`;
+  healthFlashRed();
   updateHealth();
   if (health <= 0) {
     health = 0;

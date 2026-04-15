@@ -25,13 +25,13 @@
                   <h3>TIME</h3>
                   <p>20s</p>
                 </div>
-                <div id="score" class="game-info-item">
-                  <h3>SCORE</h3>
-                  <p>5</p>
-                </div>
                 <div id="health" class="game-info-item">
                   <h3>HEALTH</h3>
                   <p>1</p>
+                </div>
+                <div id="score" class="game-info-item">
+                  <h3>SCORE</h3>
+                  <p>5</p>
                 </div>
                 <div id="streak" class="game-info-item">
                   <h3>STREAK</h3>
@@ -63,7 +63,7 @@
                 alt="stormtrooper"
               />
               <p>Stormtrooper</p>
-              <p>10 points</p>
+              <p><strong>10 points</strong></p>
             </div>
             <div class="legend-item">
               <img
@@ -72,7 +72,7 @@
                 alt="darktrooper"
               />
               <p>Dark Trooper</p>
-              <p>50 points</p>
+              <p><strong>50 points</strong></p>
             </div>
 
             <div class="legend-item">
@@ -83,7 +83,7 @@
                 alt="hutt"
               />
               <p>Hutt</p>
-              <p>+5 Seconds</p>
+              <p><strong>+5 Seconds</strong></p>
             </div>
 
             <div class="legend-item">
@@ -92,25 +92,29 @@
                 src="/Assets/image/characters/grogu.png"
                 alt="grogu"
               />
-              <p>Grogu</p>
-              <p>-1 Health</p>
+              <p>The Child</p>
+              <p><strong>-1 Health</strong></p>
             </div>
           </div>
         </div>
         <!-- Default Screen -->
         <div id="start-screen" class="container">
           <div class="intro-wrapper">
+            <img
+              class="intro-icon"
+              src="/Assets/image/icons/mandolorian-helmet.svg"
+            />
             <h2 class="text-align-center margin-bottom-small">
               Greetings, Bounty Hunter.
             </h2>
             <p class="intro-text">
               The galaxy is a dangerous place. As a bounty hunter, you are
               tasked with taking out the planet's most wanted criminals. But
-              watch out for the green baby. The Mandalorian won't be happy if
+              watch out for the green baby; The Mandalorian won't be happy if
               you mess with the kid.
             </p>
             <button id="start-button" class="starfield-origin">
-              Start Game
+              START GAME
             </button>
           </div>
 
@@ -121,17 +125,13 @@
                 Click characters as they appear in the holes to earn points
               </li>
               <li>
-                <strong>Stormtrooper</strong> — 10 pts &nbsp;|&nbsp;
-                <strong>Dark Trooper</strong> — 50 pts &nbsp;|&nbsp;
-                <strong>Hutt</strong> — +5 seconds
+                <strong>Avoid the child!</strong>! clicking him costs you 1
+                health
               </li>
-              <li>
-                <strong>Avoid Grogu</strong> — clicking him costs you 1 health
-              </li>
-              <li>Missing a shot or hitting Grogu resets your streak</li>
+              <li>Missing a shot or hitting the child resets your streak</li>
               <li>
                 You have <strong>3 health</strong> and
-                <strong>60 seconds</strong> — good luck, hunter.
+                <strong>60 seconds</strong>. good luck, Bounty hunter.
               </li>
             </ul>
           </div>
