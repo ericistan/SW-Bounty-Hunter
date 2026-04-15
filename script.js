@@ -47,7 +47,7 @@ const groguHitSFX = new Audio("Assets/Audio/sfx/sfx-bad-baby.mp3");
 const gameOverSFX = new Audio("Assets/Audio/sfx/sfx-mando.mp3");
 const gameOverVoiceSFX = new Audio("Assets/Audio/sfx/sfx-mando-odds.mp3");
 const backgroundMusic = new Audio("Assets/Audio/music/bgm.mp3");
-const startButtonHoverSFX = new Audio("Assets/Audio/sfx/sfx-recharge.mp3");
+const startButtonHoverSFX = new Audio("Assets/Audio/sfx/sfx-hyperspace.mp3");
 
 function playBlasterSFX() {
   blasterSFX.currentTime = 0; // Reset to start for rapid firing
@@ -103,11 +103,18 @@ function playGameOverVoiceSFX() {
 
 function playStartButtonHoverSFX() {
   startButtonHoverSFX.currentTime = 0;
-  startButtonHoverSFX.volume = 0.1;
+  startButtonHoverSFX.volume = 0.5;
   startButtonHoverSFX.play();
 }
 
 startButton.addEventListener("mouseover", playStartButtonHoverSFX);
+
+function stopStartButtonHoverSFX() {
+  startButtonHoverSFX.pause();
+  startButtonHoverSFX.currentTime = 0;
+}
+
+startButton.addEventListener("mouseleave", stopStartButtonHoverSFX);
 
 // Initial Values
 let score = 0;
@@ -123,6 +130,7 @@ function startGame() {
   isGameRunning = true;
   gameBoard.style.display = "grid";
   startScreen.style.display = "none";
+  resetButton.style.display = "block";
   updateStatusText();
   startCountdown();
   startSpawnLoop();
@@ -150,6 +158,7 @@ function resetGame() {
   streak = 0;
   maxStreak = 0;
   isGameRunning = false;
+  resetButton.style.display = "none";
   gameBoard.style.display = "none";
   startScreen.style.display = "grid";
   gameOverScore.innerHTML = ``;
@@ -201,9 +210,9 @@ function updateHealth() {
 
 function updateStatusText() {
   if (isGameRunning === true) {
-    statusMessage.innerHTML = "Let the bounty hunting begin!";
+    statusMessage.innerHTML = "Let the hunt begin!";
   } else {
-    statusMessage.innerHTML = "Press Start Hunting to begin.";
+    statusMessage.innerHTML = "Greetings, Bounty Hunter...";
   }
 }
 
@@ -251,7 +260,7 @@ function startCountdown() {
 function startSpawnLoop() {
   spawnInterval = setInterval(() => {
     spawnCharacter();
-  }, 800);
+  }, 750);
 }
 
 function stopSpawnLoop() {
@@ -306,7 +315,7 @@ function chooseRandomCharacter() {
 }
 
 const duration = {
-  stormtrooper: 1100,
+  stormtrooper: 1200,
   grogu: 2000,
   hutt: 800,
   darktrooper: 800,
@@ -414,3 +423,27 @@ function damageHealth() {
   }
 }
 resetGame();
+
+// Carousel
+const carouselTrack = document.querySelector(".carousel-track");
+const carouselPrev = document.getElementById("carousel-prev");
+const carouselNext = document.getElementById("carousel-next");
+const carouselIndicator = document.querySelector(".carousel-indicator");
+const slides = document.querySelectorAll(".slide");
+const totalSlides = slides.length;
+let currentSlide = 0;
+
+function updateCarousel() {
+  carouselTrack.style.transform = `translateX(-${currentSlide * 100}%)`;
+  carouselIndicator.textContent = `${currentSlide + 1} / ${totalSlides}`;
+}
+
+carouselPrev.addEventListener("click", () => {
+  currentSlide = currentSlide === 0 ? totalSlides - 1 : currentSlide - 1;
+  updateCarousel();
+});
+
+carouselNext.addEventListener("click", () => {
+  currentSlide = currentSlide === totalSlides - 1 ? 0 : currentSlide + 1;
+  updateCarousel();
+});

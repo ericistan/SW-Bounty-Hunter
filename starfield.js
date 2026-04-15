@@ -23,11 +23,11 @@
   const config = {
     numStars: 500, // Number of stars
     baseSpeed: 2, // Base speed of stars (will affect acceleration)
-    trailLength: 0.5, // Length of star trail (0-1)
+    trailLength: 0.8, // Length of star trail (0-1)
     starColor: "rgb(251, 251, 251)", // Color of stars (only rgb)
     canvasColor: "rgb(0, 0, 0)", // Canvas background color (only rgb)
     hueJitter: 0, // Maximum hue variation in degrees (0-360)
-    maxAcceleration: 0.5, // Maximum acceleration
+    maxAcceleration: 0.6, // Maximum acceleration
     accelerationRate: 0.2, // Rate of acceleration
     decelerationRate: 0.2, // Rate of deceleration
     minSpawnRadius: 80, // Minimum spawn distance from origin
