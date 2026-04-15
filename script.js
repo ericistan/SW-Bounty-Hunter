@@ -284,6 +284,9 @@ function stopSpawnLoop() {
 
 function spawnCharacter() {
   const selectedHole = chooseRandomHole();
+  if (!selectedHole) {
+    return; // No empty holes available
+  }
   const selectedCharacter = chooseRandomCharacter();
   characterAppears(selectedHole, selectedCharacter);
 }
