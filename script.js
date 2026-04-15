@@ -260,7 +260,7 @@ function startCountdown() {
 function startSpawnLoop() {
   spawnInterval = setInterval(() => {
     spawnCharacter();
-  }, 750);
+  }, 550);
 }
 
 function stopSpawnLoop() {
@@ -395,6 +395,8 @@ function handleHoleClick(event) {
   } else if (characterImg.alt === "darktrooper") {
     score += 50;
     streak += 1;
+    statusMessage.innerHTML = `<p class="text-green">Score +50</p>`;
+    scoreFlashGreen();
     playBlasterSFX();
     playDarkTrooperHitSFX();
     updateScore();
