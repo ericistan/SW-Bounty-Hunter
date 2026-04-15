@@ -82,7 +82,7 @@ function playTimeRechargeSFX() {
 
 function playBackgroundMusic() {
   backgroundMusic.loop = true;
-  backgroundMusic.volume = 0.4;
+  backgroundMusic.volume = 0.2;
   backgroundMusic.play();
 }
 
@@ -171,7 +171,7 @@ resetButton.addEventListener("click", resetGame);
 function showGameOverScreen() {
   gameOverScore.innerHTML = `Final Score: ${score}`;
   gameOverMaxStreak.innerHTML = `Max Streak: ${maxStreak}`;
-  gameBoard.style.display = "none";
+  // gameBoard.style.display = "none";
   gameOverScreen.style.display = "block";
 }
 
