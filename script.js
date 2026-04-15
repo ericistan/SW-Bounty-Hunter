@@ -42,7 +42,6 @@ const blasterSFX = new Audio("Assets/Audio/sfx/sfx-blaster.mp3");
 const trooperHitSFX = new Audio("Assets/Audio/sfx/sfx-stormtrooper-hit.mp3");
 const darkTrooperHitSFX = new Audio("Assets/Audio/sfx/sfx-darktrooper.mp3");
 const jabbaHitSFX = new Audio("Assets/Audio/sfx/sfx-jabba.mp3");
-const timeRechargeSFX = new Audio("Assets/Audio/sfx/sfx-armorer.mp3");
 const groguHitSFX = new Audio("Assets/Audio/sfx/sfx-bad-baby.mp3");
 const gameOverSFX = new Audio("Assets/Audio/sfx/sfx-mando.mp3");
 const gameOverVoiceSFX = new Audio("Assets/Audio/sfx/sfx-mando-odds.mp3");
@@ -51,6 +50,7 @@ const startButtonHoverSFX = new Audio("Assets/Audio/sfx/sfx-hyperspace.mp3");
 
 function playBlasterSFX() {
   blasterSFX.currentTime = 0; // Reset to start for rapid firing
+  blasterSFX.volume = 0.5;
   blasterSFX.play();
 }
 
@@ -61,17 +61,19 @@ function playTrooperHitSFX() {
 
 function playGroguHitSFX() {
   groguHitSFX.currentTime = 0;
+  groguHitSFX.volume = 0.5;
   groguHitSFX.play();
 }
 
 function playDarkTrooperHitSFX() {
   darkTrooperHitSFX.currentTime = 0;
-  backgroundMusic.volume = 0.4;
+  darkTrooperHitSFX.volume = 0.6;
   darkTrooperHitSFX.play();
 }
 
 function playJabbaHitSFX() {
   jabbaHitSFX.currentTime = 0;
+  jabbaHitSFX.volume = 1;
   jabbaHitSFX.play();
 }
 
@@ -82,7 +84,7 @@ function playTimeRechargeSFX() {
 
 function playBackgroundMusic() {
   backgroundMusic.loop = true;
-  backgroundMusic.volume = 0.2;
+  backgroundMusic.volume = 0.4;
   backgroundMusic.play();
 }
 
@@ -103,18 +105,14 @@ function playGameOverVoiceSFX() {
 
 function playStartButtonHoverSFX() {
   startButtonHoverSFX.currentTime = 0;
-  startButtonHoverSFX.volume = 0.5;
+  startButtonHoverSFX.volume = 0.8;
   startButtonHoverSFX.play();
 }
-
-startButton.addEventListener("mouseover", playStartButtonHoverSFX);
 
 function stopStartButtonHoverSFX() {
   startButtonHoverSFX.pause();
   startButtonHoverSFX.currentTime = 0;
 }
-
-startButton.addEventListener("mouseleave", stopStartButtonHoverSFX);
 
 // Initial Values
 let score = 0;
@@ -176,6 +174,23 @@ function resetGame() {
 
 startButton.addEventListener("click", startGame);
 resetButton.addEventListener("click", resetGame);
+startButton.addEventListener("mouseover", playStartButtonHoverSFX);
+startButton.addEventListener("mouseleave", stopStartButtonHoverSFX);
+
+// Unlock hover SFX on first click — required by browser autoplay policy
+document.addEventListener(
+  "click",
+  () => {
+    startButtonHoverSFX
+      .play()
+      .then(() => {
+        startButtonHoverSFX.pause();
+        startButtonHoverSFX.currentTime = 0;
+      })
+      .catch(() => {});
+  },
+  { once: true },
+);
 
 function showGameOverScreen() {
   gameOverScore.innerHTML = `Final Score: ${score}`;
@@ -292,9 +307,9 @@ function chooseRandomHole() {
 // ];
 
 const characterWeights = {
-  stormtrooper: 58,
-  grogu: 17,
-  hutt: 5,
+  stormtrooper: 55,
+  grogu: 15,
+  hutt: 10,
   darktrooper: 15,
 };
 
@@ -315,7 +330,7 @@ function chooseRandomCharacter() {
 }
 
 const duration = {
-  stormtrooper: 1200,
+  stormtrooper: 1300,
   grogu: 2000,
   hutt: 800,
   darktrooper: 800,
@@ -384,7 +399,7 @@ function handleHoleClick(event) {
   else if (characterImg.alt === "hutt") {
     timeLeft += 5;
     streak += 1;
-    statusMessage.innerHTML = `<p class="text-green">Gained +5 Seconds</p>`;
+    statusMessage.innerHTML = `<p class="text-green">Time +5s</p>`;
     timerFlashGreen();
     playBlasterSFX();
     playJabbaHitSFX();
