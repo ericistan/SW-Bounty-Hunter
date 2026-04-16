@@ -26,7 +26,7 @@
 function startSpawnLoop() {
   spawnInterval = setInterval(() => {
     spawnCharacter();
-  }, 520);
+  }, 900);
 }
 
 //Character spawn probabilities (weights). Higher weight means more likely to spawn.
@@ -39,10 +39,10 @@ const characterWeights = {
 
 //How long each character stays on screen (in milliseconds).
 const duration = {
-  stormtrooper: 720,
-  grogu: 950,
-  hutt: 550,
-  darktrooper: 550,
+  stormtrooper: 1000,
+  grogu: 1400,
+  hutt: 900,
+  darktrooper: 850,
 };
 
 //Countdown timer logic (called from startGame).
