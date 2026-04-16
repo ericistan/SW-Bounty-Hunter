@@ -32,9 +32,6 @@ Early concept designs revolves around hunting criminals in the Star Wars univers
 
 ## Character appearance and behavior logic:
 
-- Characters will randomly appear in one of the holes at random intervals (between 500ms to 800ms).
-- Each character will stay visible for a short duration (300ms) before disappearing if not hit
-
 ```
 function spawnCharacter() {
   const selectedHole = chooseRandomHole();

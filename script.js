@@ -95,8 +95,8 @@ function chooseRandomHole() {
 }
 
 // Uses weighted probabilities so each character spawns at a different rate.
-// Object.entries converts the weights map to pairs, reduce sums the total,
-// then a random roll walks down the weights to pick a winner.
+// Object.entries converts the weights map to pairs, .reduce sums the total,
+// then a random roll walks down the weights to pick a winner. ST 1-50, GG 51-78..etc.
 function chooseRandomCharacter() {
   const entries = Object.entries(characterWeights);
   const totalWeight = entries.reduce((sum, [_, weight]) => sum + weight, 0);
