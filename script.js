@@ -1,3 +1,4 @@
+// ── 1. DOM References ──────────────────────────────────────
 const scoreElement = document.getElementById("score");
 const streakElement = document.getElementById("streak");
 const maxStreakElement = document.getElementById("max-streak");
@@ -15,10 +16,9 @@ const streakValueElement = document.querySelector("#streak p");
 const maxStreakValueElement = document.querySelector("#max-streak p");
 const timerValueElement = document.querySelector("#timer p");
 const healthValueElement = document.querySelector("#health p");
-const startButtonElement = document.getElementById("start-button");
 const holes = document.querySelectorAll(".hole");
 
-// Initial Values
+// ── 2. Game State ──────────────────────────────────────────
 let score = 0;
 let timeLeft = 60;
 let health = 3;
@@ -28,6 +28,7 @@ let isGameRunning = false;
 let spawnInterval = null;
 let countdownInterval = null;
 
+// ── 3. Game Lifecycle ──────────────────────────────────────
 function startGame() {
   isGameRunning = true;
   gameBoard.style.display = "grid";
@@ -51,7 +52,6 @@ function endGame() {
   }, 1000);
 }
 
-// Step 3: Reset puts everything back to default.
 function resetGame() {
   score = 0;
   timeLeft = 60;
@@ -75,32 +75,132 @@ function resetGame() {
   updateStatusText();
 }
 
-startButton.addEventListener("click", startGame);
-resetButton.addEventListener("click", resetGame);
-startButton.addEventListener("mouseover", playStartButtonHoverSFX);
-startButton.addEventListener("mouseleave", stopStartButtonHoverSFX);
-
-// Unlock hover SFX on first click — required by browser autoplay policy
-document.addEventListener(
-  "click",
-  () => {
-    startButtonHoverSFX
-      .play()
-      .then(() => {
-        startButtonHoverSFX.pause();
-        startButtonHoverSFX.currentTime = 0;
-      })
-      .catch(() => {});
-  },
-  { once: true },
-);
-
-function showGameOverScreen() {
-  gameOverScore.innerHTML = `Final Score: ${score}`;
-  gameOverMaxStreak.innerHTML = `Max Streak: ${maxStreak}`;
+// ── 4. Character Logic ─────────────────────────────────────
+function spawnCharacter() {
+  const selectedHole = chooseRandomHole();
+  if (!selectedHole) {
+    return; // No empty holes available
+  }
+  const selectedCharacter = chooseRandomCharacter();
+  characterAppears(selectedHole, selectedCharacter);
 }
 
-// Update UI Functions
+function chooseRandomHole() {
+  const emptyHoles = Array.from(holes).filter((hole) => hole.innerHTML === "");
+  if (emptyHoles.length === 0) {
+    return null;
+  }
+  const randomHoleIndex = Math.floor(Math.random() * emptyHoles.length);
+  return emptyHoles[randomHoleIndex];
+}
+
+// Uses weighted probabilities so each character spawns at a different rate.
+// Object.entries converts the weights map to pairs, reduce sums the total,
+// then a random roll walks down the weights to pick a winner.
+function chooseRandomCharacter() {
+  const entries = Object.entries(characterWeights);
+  const totalWeight = entries.reduce((sum, [_, weight]) => sum + weight, 0);
+
+  let randomNum = Math.random() * totalWeight;
+
+  for (const [character, weight] of entries) {
+    if (randomNum < weight) {
+      return character;
+    }
+    randomNum -= weight;
+  }
+}
+
+function characterAppears(hole, character) {
+  hole.innerHTML = `<img src="/Assets/image/characters/${character}.png" alt="${character}" class="character" draggable="false"/>`;
+  const img = hole.querySelector("img");
+  const timeLimit = duration[character];
+  setTimeout(() => {
+    characterExits(hole, img);
+  }, timeLimit);
+}
+
+function characterExits(hole, img) {
+  img.classList.add("characterExit");
+  img.addEventListener(
+    "animationend",
+    () => {
+      hole.innerHTML = "";
+    },
+    { once: true },
+  );
+}
+
+// ── 5. Player Interaction ──────────────────────────────────
+function handleHoleClick(event) {
+  const hole = event.currentTarget;
+  const characterImg = hole.querySelector("img");
+
+  // Missed hit
+  if (!characterImg) {
+    streak = 0;
+    updateStreak();
+    playBlasterSFX();
+    return;
+  }
+
+  if (characterImg.alt === "stormtrooper") {
+    score += 10;
+    streak += 1;
+    statusMessage.innerHTML = `<p class="text-green">Score +10</p>`;
+    scoreFlashGreen();
+    playBlasterSFX();
+    playTrooperHitSFX();
+    updateScore();
+    updateStreak();
+    updateMaxStreak();
+    hole.innerHTML = "";
+  } else if (characterImg.alt === "grogu") {
+    streak = 0;
+    playGroguHitSFX();
+    updateStreak();
+    damageHealth();
+    hole.innerHTML = "";
+  } else if (characterImg.alt === "hutt") {
+    timeLeft += 5;
+    streak += 1;
+    statusMessage.innerHTML = `<p class="text-green">Time +5s</p>`;
+    timerFlashGreen();
+    playBlasterSFX();
+    playJabbaHitSFX();
+    updateTimer();
+    updateStreak();
+    updateMaxStreak();
+    hole.innerHTML = "";
+  } else if (characterImg.alt === "darktrooper") {
+    score += 50;
+    streak += 1;
+    statusMessage.innerHTML = `<p class="text-green">Score +50</p>`;
+    scoreFlashGreen();
+    playBlasterSFX();
+    playDarkTrooperHitSFX();
+    updateScore();
+    updateStreak();
+    updateMaxStreak();
+    hole.innerHTML = "";
+  }
+}
+
+function damageHealth() {
+  health -= 1;
+  statusMessage.innerHTML = `<p class="text-red">You hit the child -1 health.</p>`;
+  healthFlashRed();
+  updateHealth();
+  if (health <= 0) {
+    health = 0;
+    timeLeft = 0;
+    updateHealth();
+    isGameRunning = false;
+    endGame();
+  }
+}
+
+// ── 6. UI Updates ──────────────────────────────────────────
 function updateScore() {
   scoreValueElement.textContent = String(score);
 }
@@ -132,6 +232,11 @@ function updateStatusText() {
   }
 }
 
+function showGameOverScreen() {
+  gameOverScore.innerHTML = `Final Score: ${score}`;
+  gameOverMaxStreak.innerHTML = `Max Streak: ${maxStreak}`;
+}
+
 function timerFlashGreen() {
   timerValueElement.classList.add("flash-green");
   setTimeout(() => {
@@ -158,158 +263,30 @@ function stopSpawnLoop() {
   spawnInterval = null;
 }
 
-function spawnCharacter() {
-  const selectedHole = chooseRandomHole();
-  if (!selectedHole) {
-    return; // No empty holes available
-  }
-  const selectedCharacter = chooseRandomCharacter();
-  characterAppears(selectedHole, selectedCharacter);
-}
+// ── 7. Event Listeners ─────────────────────────────────────
+startButton.addEventListener("click", startGame);
+resetButton.addEventListener("click", resetGame);
+startButton.addEventListener("mouseover", playStartButtonHoverSFX);
+startButton.addEventListener("mouseleave", stopStartButtonHoverSFX);
 
-function chooseRandomHole() {
-  const emptyHoles = Array.from(holes).filter((hole) => hole.innerHTML === "");
-  if (emptyHoles.length === 0) {
-    return null; // No empty holes available
-  }
-  const randomHoleIndex = Math.floor(Math.random() * emptyHoles.length);
-  return emptyHoles[randomHoleIndex];
-}
-
-//read up destructiuring assignment and reduce method for arrays to understand this function better. It allows us to assign different probabilities to each character spawn, making the game more dynamic and challenging. The weights can be adjusted to make certain characters appear more or less frequently based on desired difficulty and gameplay experience.
-//try out console.log with the entries and totalWeight variables to see how they work!
-function chooseRandomCharacter() {
-  const entries = Object.entries(characterWeights); //converts KVP to aray
-  const totalWeight = entries.reduce((sum, [_, weight]) => sum + weight, 0);
-
-  let randomNum = Math.random() * totalWeight;
-
-  for (const [character, weight] of entries) {
-    if (randomNum < weight) {
-      return character; // This still returns "stormtrooper", "grogu", etc.
-    }
-    randomNum -= weight;
-  }
-}
-
-function characterAppears(hole, character) {
-  hole.innerHTML = `<img src="/Assets/image/characters/${character}.png" alt="${character}" class="character" draggable="false"/>`;
-  const img = hole.querySelector("img");
-  let timeLimit = duration[character];
-  setTimeout(() => {
-    characterExits(hole, img);
-  }, timeLimit);
-  //if you want diff characters to staggger differently..think of 1500 as a var.
-}
-
-function characterExits(hole, img) {
-  img.classList.add("characterExit");
-
-  img.addEventListener(
-    "animationend",
-    () => {
-      hole.innerHTML = "";
-    },
-    { once: true },
-  );
-}
-
-// Player interaction logic
-function handleHoleClick(event) {
-  const hole = event.currentTarget;
-  const characterImg = hole.querySelector("img");
-  // Missed hit
-  if (!characterImg) {
-    streak = 0;
-    updateStreak();
-    playBlasterSFX();
-    return;
-  }
-
-  if (characterImg.alt === "stormtrooper") {
-    // Hit on active character
-    score += 10;
-    streak += 1;
-    playBlasterSFX();
-    playTrooperHitSFX();
-    scoreFlashGreen();
-    statusMessage.innerHTML = `<p class="text-green">Score +10</p>`;
-    updateScore();
-    updateStreak();
-    updateMaxStreak();
-    hole.innerHTML = "";
-  } else if (characterImg.alt === "grogu") {
-    score += 0;
-    streak = 0;
-    playGroguHitSFX();
-    updateStreak();
-    damageHealth();
-    hole.innerHTML = "";
-  } else if (characterImg.alt === "hutt") {
-    timeLeft += 5;
-    streak += 1;
-    statusMessage.innerHTML = `<p class="text-green">Time +5s</p>`;
-    timerFlashGreen();
-    playBlasterSFX();
-    playJabbaHitSFX();
-    updateTimer();
-    updateStreak();
-    updateMaxStreak();
-    hole.innerHTML = "";
-  } else if (characterImg.alt === "darktrooper") {
-    score += 50;
-    streak += 1;
-    statusMessage.innerHTML = `<p class="text-green">Score +50</p>`;
-    scoreFlashGreen();
-    playBlasterSFX();
-    playDarkTrooperHitSFX();
-    updateScore();
-    updateStreak();
-    updateMaxStreak();
-    hole.innerHTML = "";
-  }
-}
-
-// Attach event listeners to each hole
 holes.forEach((hole) => {
   hole.addEventListener("click", handleHoleClick);
 });
 
-function damageHealth() {
-  health -= 1;
-  statusMessage.innerHTML = `<p class="text-red">You hit the child -1 health.</p>`;
-  healthFlashRed();
-  updateHealth();
-  if (health <= 0) {
-    health = 0;
-    timeLeft = 0;
-    updateHealth();
-    isGameRunning = false;
-    endGame();
-  }
-}
+// Unlock hover SFX on first click — required by browser autoplay policy
+document.addEventListener(
+  "click",
+  () => {
+    startButtonHoverSFX
+      .play()
+      .then(() => {
+        startButtonHoverSFX.pause();
+        startButtonHoverSFX.currentTime = 0;
+      })
+      .catch(() => {});
+  },
+  { once: true },
+);
+
+// ── 8. Init ────────────────────────────────────────────────
 resetGame();
-
-// Carousel
-const carouselTrack = document.querySelector(".carousel-track");
-const carouselPrev = document.getElementById("carousel-prev");
-const carouselNext = document.getElementById("carousel-next");
-const carouselIndicator = document.querySelector(".carousel-indicator");
-const slides = document.querySelectorAll(".slide");
-const totalSlides = slides.length;
-let currentSlide = 0;
-
-function updateCarousel() {
-  carouselTrack.style.transform = `translateX(-${currentSlide * 100}%)`;
-  carouselIndicator.textContent = `${currentSlide + 1} / ${totalSlides}`;
-}
-
-carouselPrev.addEventListener("click", () => {
-  currentSlide = currentSlide === 0 ? totalSlides - 1 : currentSlide - 1;
-  updateCarousel();
-});
-
-carouselNext.addEventListener("click", () => {
-  currentSlide = currentSlide === totalSlides - 1 ? 0 : currentSlide + 1;
-  updateCarousel();
-});
