@@ -38,11 +38,6 @@ function playJabbaHitSFX() {
   jabbaHitSFX.play();
 }
 
-function playTimeRechargeSFX() {
-  timeRechargeSFX.currentTime = 0;
-  timeRechargeSFX.play();
-}
-
 function playBackgroundMusic() {
   backgroundMusic.loop = true;
   backgroundMusic.volume = 0.4;

@@ -141,28 +141,27 @@ Game runs as follows
   - Penalty incurred
 - Music ![BGM](<./Assets/Audio/music/The%20Mandalorian%20-%20Theme%20(16-bit%20SEGA%20Genesis%20Cover)%20-%20Noah%20N%20Copeland.mp3>)
 
-### character types
+## Characters
 
-- stormtrooper - 1 point. Most common enemy, appears frequently. 60% chance to appear.
-- commander - 2 points. Less common, appears less frequently. 20% chance to appear.
-- Death trooper - 3 points. Rare, appears infrequently. 10% chance to appear.
+| Character    | Outcome on Hit               | Points     | Duration on screen | Spawn Weight |
+| ------------ | ---------------------------- | ---------- | ------------------ | ------------ |
+| Stormtrooper | Score + streak               | +10 pts    | 1300ms             | 55           |
+| Dark Trooper | Score + streak               | +50 pts    | 900ms              | 15           |
+| Hutt (Jabba) | Time bonus + streak          | +5 seconds | 900ms              | 10           |
+| Grogu        | Health penalty, streak reset | 0 pts      | 2000ms             | 15           |
 
-- Grogu (penalty) - if hit, reduce health by 1. If health reaches 0, game over. 20% chance to appear after 2 consecutive hits
-- Dark trooper (penalty) - if hit, lose points. 30% chance to appear after 3 consecutive hits
-- The armorer (powerup) - if hit, gain extra health. 10% chance to appear after 5 consecutive hits
+**Spawn logic:** Weighted probability via `characterWeights` object in `config.js`. Replaces the original `Math.random()` if/else approach from planning.md.
 
-Javascript logic for character spawn probabilities:
-chooseCharacter()
+**Duration logic:** Each character has its own screen time in the `duration` object in `config.js`. Replaces the flat 300ms timeout from planning.md.
 
-Use Math.random() with basic if/else checks.
+**Multiple active holes:** Multiple characters can be on screen simultaneously. planning.md assumed one active hole at a time (`activeHoleIndex`).
 
-- 0.00 to 0.59 => stormtrooper
-- 0.60 to 0.79 => commander
-- 0.80 to 0.89 => deathTrooper
-- 0.90 to 0.99 => grogu
-- 0.90 to 0.99 => The Armorer
+## Stretch Goals / Future Features
 
-## Stretch Goals
-
-- higher level enemies that requires multiple hits to eliminate.
-- Leaderboards. high score stored in instance - in future store in database (localStorage)
+| Feature                              | Notes                                                    |
+| ------------------------------------ | -------------------------------------------------------- |
+| The Armorer (health powerup)         | Was in original plan — never added                       |
+| Commander character                  | Was in original plan — replaced by Hutt and Dark Trooper |
+| Leaderboard / high score persistence | Stretch goal from planning.md — would use `localStorage` |
+| Multi-hit enemies                    | Stretch goal from planning.md                            |
+| Difficulty scaling                   | Spawn rate or duration could tighten over time           |
