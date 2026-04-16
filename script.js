@@ -331,8 +331,8 @@ function chooseRandomCharacter() {
 const duration = {
   stormtrooper: 1300,
   grogu: 2000,
-  hutt: 800,
-  darktrooper: 800,
+  hutt: 900,
+  darktrooper: 900,
 };
 
 function characterAppears(hole, character) {
