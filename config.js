@@ -39,10 +39,10 @@ const characterWeights = {
 
 //How long each character stays on screen (in milliseconds).
 const duration = {
-  stormtrooper: 580,
-  grogu: 900,
-  hutt: 500,
-  darktrooper: 470,
+  stormtrooper: 600,
+  grogu: 950,
+  hutt: 550,
+  darktrooper: 520,
 };
 
 //Countdown timer logic (called from startGame).
