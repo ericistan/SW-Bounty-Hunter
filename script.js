@@ -1,12 +1,3 @@
-// Build order (beginner roadmap):
-// 1) Get DOM elements and show default values.
-// 2) Make Start button update visible text only.
-// 3) Make Reset button restore defaults.
-// 4) Add countdown timer (one feature at a time).
-// 5) Add character spawn logic.
-// 6) Add click scoring and health rules.
-
-// Step 1: Grab DOM elements.
 const scoreElement = document.getElementById("score");
 const streakElement = document.getElementById("streak");
 const maxStreakElement = document.getElementById("max-streak");
@@ -25,93 +16,7 @@ const maxStreakValueElement = document.querySelector("#max-streak p");
 const timerValueElement = document.querySelector("#timer p");
 const healthValueElement = document.querySelector("#health p");
 const startButtonElement = document.getElementById("start-button");
-
 const holes = document.querySelectorAll(".hole");
-
-//UI Enhancements
-const targetUI = document.querySelectorAll(".hole");
-const redCrosshair =
-  "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'><line x1='20' y1='0' x2='20' y2='40' stroke='%2347FF22' stroke-width='4'/><line x1='0' y1='20' x2='40' y2='20' stroke='%2347FF22' stroke-width='4'/></svg>\") 20 20, crosshair";
-targetUI.forEach((hole) => {
-  hole.style.cursor = redCrosshair;
-});
-
-//Audio elements
-const blasterSFX = new Audio("Assets/Audio/sfx/sfx-blaster.mp3");
-const trooperHitSFX = new Audio("Assets/Audio/sfx/sfx-stormtrooper-hit.mp3");
-const darkTrooperHitSFX = new Audio("Assets/Audio/sfx/sfx-darktrooper.mp3");
-const jabbaHitSFX = new Audio("Assets/Audio/sfx/sfx-jabba.mp3");
-const groguHitSFX = new Audio("Assets/Audio/sfx/sfx-bad-baby.mp3");
-const gameOverSFX = new Audio("Assets/Audio/sfx/sfx-mando.mp3");
-const gameOverVoiceSFX = new Audio("Assets/Audio/sfx/sfx-mando-odds.mp3");
-const backgroundMusic = new Audio("Assets/Audio/music/bgm.mp3");
-const startButtonHoverSFX = new Audio("Assets/Audio/sfx/sfx-hyperspace.mp3");
-
-function playBlasterSFX() {
-  blasterSFX.currentTime = 0; // Reset to start for rapid firing
-  blasterSFX.volume = 0.5;
-  blasterSFX.play();
-}
-
-function playTrooperHitSFX() {
-  trooperHitSFX.currentTime = 0;
-  trooperHitSFX.play();
-}
-
-function playGroguHitSFX() {
-  groguHitSFX.currentTime = 0;
-  groguHitSFX.volume = 0.5;
-  groguHitSFX.play();
-}
-
-function playDarkTrooperHitSFX() {
-  darkTrooperHitSFX.currentTime = 0;
-  darkTrooperHitSFX.volume = 0.6;
-  darkTrooperHitSFX.play();
-}
-
-function playJabbaHitSFX() {
-  jabbaHitSFX.currentTime = 0;
-  jabbaHitSFX.volume = 1;
-  jabbaHitSFX.play();
-}
-
-function playTimeRechargeSFX() {
-  timeRechargeSFX.currentTime = 0;
-  timeRechargeSFX.play();
-}
-
-function playBackgroundMusic() {
-  backgroundMusic.loop = true;
-  backgroundMusic.volume = 0.4;
-  backgroundMusic.play();
-}
-
-function stopBackgroundMusic() {
-  backgroundMusic.pause();
-  backgroundMusic.currentTime = 0;
-}
-
-function playGameOverSFX() {
-  gameOverSFX.currentTime = 0;
-  gameOverSFX.play();
-}
-
-function playGameOverVoiceSFX() {
-  gameOverVoiceSFX.currentTime = 0;
-  gameOverVoiceSFX.play();
-}
-
-function playStartButtonHoverSFX() {
-  startButtonHoverSFX.currentTime = 0;
-  startButtonHoverSFX.volume = 0.8;
-  startButtonHoverSFX.play();
-}
-
-function stopStartButtonHoverSFX() {
-  startButtonHoverSFX.pause();
-  startButtonHoverSFX.currentTime = 0;
-}
 
 // Initial Values
 let score = 0;
@@ -248,32 +153,6 @@ function healthFlashRed() {
   }, 500);
 }
 
-//Countdown timer logic (called from startGame).
-function startCountdown() {
-  if (isGameRunning === false) return;
-
-  countdownInterval = setInterval(() => {
-    timeLeft -= 1;
-
-    if (timeLeft <= 0) {
-      timeLeft = 0; // clamp at 0
-      updateTimer();
-      clearInterval(countdownInterval);
-      isGameRunning = false;
-      endGame();
-      return;
-    }
-
-    updateTimer();
-  }, 1000);
-}
-
-function startSpawnLoop() {
-  spawnInterval = setInterval(() => {
-    spawnCharacter();
-  }, 550);
-}
-
 function stopSpawnLoop() {
   clearInterval(spawnInterval);
   spawnInterval = null;
@@ -297,21 +176,6 @@ function chooseRandomHole() {
   return emptyHoles[randomHoleIndex];
 }
 
-// const characters = [
-//   "stormtrooper",
-//   "grogu",
-//   // "thearmorer",
-//   "hutt",
-//   "darktrooper",
-// ];
-
-const characterWeights = {
-  stormtrooper: 55,
-  grogu: 15,
-  hutt: 10,
-  darktrooper: 15,
-};
-
 //read up destructiuring assignment and reduce method for arrays to understand this function better. It allows us to assign different probabilities to each character spawn, making the game more dynamic and challenging. The weights can be adjusted to make certain characters appear more or less frequently based on desired difficulty and gameplay experience.
 //try out console.log with the entries and totalWeight variables to see how they work!
 function chooseRandomCharacter() {
@@ -327,13 +191,6 @@ function chooseRandomCharacter() {
     randomNum -= weight;
   }
 }
-
-const duration = {
-  stormtrooper: 1300,
-  grogu: 2000,
-  hutt: 900,
-  darktrooper: 900,
-};
 
 function characterAppears(hole, character) {
   hole.innerHTML = `<img src="/Assets/image/characters/${character}.png" alt="${character}" class="character" draggable="false"/>`;
@@ -388,14 +245,7 @@ function handleHoleClick(event) {
     updateStreak();
     damageHealth();
     hole.innerHTML = "";
-  }
-  // else if (characterImg.alt === "thearmorer") {
-  //   timeLeft += 5;
-  //   playTimeRechargeSFX();
-  //   updateTimer();
-  //   hole.innerHTML = "";
-  // }
-  else if (characterImg.alt === "hutt") {
+  } else if (characterImg.alt === "hutt") {
     timeLeft += 5;
     streak += 1;
     statusMessage.innerHTML = `<p class="text-green">Time +5s</p>`;
