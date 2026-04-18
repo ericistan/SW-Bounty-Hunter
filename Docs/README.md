@@ -27,7 +27,7 @@ SW Bounty Hunter is A whack-a-mole style arcade game set in the Star Wars univer
 
 ## Build Process
 
-Development followed a plan-first, core-loop-first approach — docs and structure were laid down before any real code was written, and the game was built outward from a working spawn loop.
+Development followed a plan-first, core-loop-first approach. The design docs and structure were laid down before any real code was written, and the game was built outward from a working spawn loop.
 
 **1. Planning**
 Drafted design docs and defined character types, affordances, and function signatures prior to coding.
@@ -132,6 +132,6 @@ Early concept designs revolves around hunting criminals in the Star Wars univers
 
 ## Credits
 
-Unofficial fan project for educational use only. Star Wars and all related assets are © & ™ Lucasfilm Ltd. / Disney. This project is not affiliated with or endorsed by Disney or Lucasfilm. No copyright infringement intended; no commercial gain is made.
+Star Wars and all related assets are © & ™ Lucasfilm Ltd. / Disney. This project is not affiliated with or endorsed by Disney or Lucasfilm. No copyright infringement intended; no commercial gain is made.
 
 Music: ["The Mandalorian Theme (Sega Genesis Cover)" by N Copeland](https://www.youtube.com/watch?v=8Xg9qfPjHkA)
