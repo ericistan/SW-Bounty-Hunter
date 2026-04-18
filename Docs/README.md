@@ -13,10 +13,7 @@ Check out the live version here: [SW Bounty Hunter](https://swbountyhunter.netli
 ![Game preview](/Assets/image/hero-img-welcome-screen.jpg)
 ![Game preview](/Assets/image/hero-img.jpg)
 
-A whack-a-mole style arcade game set in the Star Wars universe. Players shoot enemy characters as they pop out of holes to earn points before time runs out or health reaches zero.
-
-**Win condition:** No hard win — players compete for personal best score and max streak.
-**Lose conditions:** Timer reaches 0 OR health reaches 0 (from hitting Grogu).
+SW Bounty Hunter is A whack-a-mole style arcade game set in the Star Wars universe. Players shoot enemy characters as they pop out of holes to earn points before time runs out or health reaches zero.
 
 ---
 
