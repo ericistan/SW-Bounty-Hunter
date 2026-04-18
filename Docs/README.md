@@ -1,5 +1,6 @@
 # SW Bounty Hunter
 
+![Game preview](/Assets/image/hero-img-welcome-screen.jpg)
 ![Game preview](/Assets/image/hero-img.jpg)
 
 ## Disclaimer
