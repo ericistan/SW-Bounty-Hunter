@@ -62,7 +62,7 @@ Modularized codebase into audio.js, config.js, and carousel.js while organizing 
 
 ![MVP initial mockup](/Assets/image/swbw-moodboard_v1.png)
 
-Early concept designs revolves around hunting criminals in the Star Wars universe, with a focus on the Mandalorian. The game features a dark, space-themed aesthetic to create an engaging and immersive experience.
+Early concept designs revolves around hunting criminals in the Star Wars universe, with a focus on being a fast-paced, action-packed experience as a bounty hunter. The game features a dark, space-themed aesthetic to create an engaging and immersive experience.
 
 ### Building the game requires the following core features:
 
