@@ -4,7 +4,7 @@
 
 SW Bounty Hunter is an unofficial fan-made project created for educational purposes only.
 
-Check out the live version here: [SW Bounty Hunter](https://sw-bounty-hunter.netlify.app/).
+Check out the live version here: [SW Bounty Hunter](https://swbountyhunter.netlify.app/).
 
 ---
 
