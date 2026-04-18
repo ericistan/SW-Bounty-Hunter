@@ -125,6 +125,13 @@ Early concept designs revolves around hunting criminals in the Star Wars univers
 | `healthFlashRed()`     | Flashes health element red on damage                              |
 | `stopSpawnLoop()`      | Clears and nulls `spawnInterval`                                  |
 
+## Stretch Goals / Future Features
+
+1. Dynamic difficulty scaling: Gradually increase spawn rate and character difficulty based on player performance (score, streak).
+2. Power-ups: Add special characters like 'The Armorer' that grant temporary bonuses (double points, instant health, slow down time) when hit.
+3. Character animations: Implement unique entrance and exit animations for each character type.
+4. UX improvements: Add visual feedback for hits/misses (e.g. crosshair flash, hit markers) and a more engaging game over screen with retry option.
+
 ## Credits
 
 Unofficial fan project for educational use only. Star Wars and all related assets are © & ™ Lucasfilm Ltd. / Disney. This project is not affiliated with or endorsed by Disney or Lucasfilm. No copyright infringement intended; no commercial gain is made.
