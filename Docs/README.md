@@ -1,8 +1,5 @@
 # SW Bounty Hunter
 
-![Game preview](/Assets/image/hero-img-welcome-screen.jpg)
-![Game preview](/Assets/image/hero-img.jpg)
-
 ## Disclaimer
 
 SW Bounty Hunter is an unofficial fan-made project created for educational purposes only.
@@ -12,6 +9,9 @@ Check out the live version here: [SW Bounty Hunter](https://sw-bounty-hunter.net
 ---
 
 ## Summary
+
+![Game preview](/Assets/image/hero-img-welcome-screen.jpg)
+![Game preview](/Assets/image/hero-img.jpg)
 
 A whack-a-mole style arcade game set in the Star Wars universe. Players shoot enemy characters as they pop out of holes to earn points before time runs out or health reaches zero.
 
