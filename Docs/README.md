@@ -1,11 +1,16 @@
 # SW Bounty Hunter
 
-## About the Game
-
 ![Game preview](/Assets/image/hero-img.jpg)
+SW Bounty Hunter is an unofficial fan-made project created for educational purposes only.
+
+Check out the live version here: [SW Bounty Hunter](https://sw-bounty-hunter.netlify.app/).
+
+---
+
+## Summary
+
 A whack-a-mole style arcade game set in the Star Wars universe. Players shoot enemy characters as they pop out of holes to earn points before time runs out or health reaches zero.
 
-Play now here [SW Bounty Hunter](https://sw-bounty-hunter.netlify.app/).
 **Win condition:** No hard win — players compete for personal best score and max streak.
 **Lose conditions:** Timer reaches 0 OR health reaches 0 (from hitting Grogu).
 
@@ -13,40 +18,42 @@ Play now here [SW Bounty Hunter](https://sw-bounty-hunter.netlify.app/).
 
 ## Tech Stack
 
-- HTML
-- CSS
-- JavaScript
+- HTML: structure of the game board, holes, and dashboard.
+- CSS: layout, styling, animations (character slide up/down, score/timer flashes, health damage), and responsive design.
+- JavaScript: game logic, state management, DOM manipulation, event handling, and audio control.
+
+---
 
 ## Build Process
 
 Development followed a plan-first, core-loop-first approach — docs and structure were laid down before any real code was written, and the game was built outward from a working spawn loop.
 
 **1. Planning**
-Started by writing the design doc across a few commits before touching any code. Defined character types, game affordances, and function signatures upfront.
+Drafted design docs and defined character types, affordances, and function signatures prior to coding.
 
 **2. Skeleton**
-Generated the base HTML structure and CSS. Layout, holes, and dashboard were in place before game logic existed.
+Established HTML/CSS layout and dashboard architecture before implementing logic.
 
 **3. Core game loop**
-Got the spawn interval running and the basic game loop functional. Characters appearing and disappearing in holes.
+Implemented the primary game loop, managing character spawn intervals and hole states.
 
 **4. Player interaction & scoring**
-Added the features that made it a game: max streak tracking, slide-up/slide-down character animations, miss detection to reset streak, music and sound effects, and DOM updates for all dashboard elements.
+Integrated hit/miss detection, streak tracking, animations, SFX, and real-time DOM updates.
 
 **5. Character expansion**
-Character roster update. Added Hutt and Dark Trooper, switched the character selection logic from simple `Math.random()` if/else to the weighted probability system, and gave each character its own on-screen duration.
+Expanded the roster and replaced basic randomization with a weighted probability system and unique character durations.
 
 **6. Gameplay tuning**
-Adjusted character spawn weights and difficulty settings. Multiple passes of tweaking until the game felt balanced.
+Iterated on spawn weights and difficulty parameters to balance gameplay.
 
 **7. UI polish & theme**
-Updated how-to-play copy, intro layout, applied the Mandalorian Night Owl armor brand colors, added the hologram flicker CSS effect, start button hover SFX, fixed full-screen sizing, and added the carousel to replace what was originally planned as a popup modal. Favicon added.
+Applied "Mandalorian Night Owl" branding, hologram CSS effects, responsive scaling, and replaced modals with a custom carousel.
 
 **8. Bug fixes**
-Addressed issues that surfaced from playtesting: Dark Trooper score was wrong, `chooseRandomHole()` was passing `null` to `selectedHole` causing a console error, `stopOpeningMusic` was being called in `startGame` when it no longer existed, and leftover dead code was removed.
+Resolved scoring glitches, null pointer errors in hole selection, and cleaned up legacy audio logic.
 
 **9. Refactor & file organization**
-Final cleanup pass. Split `script.js` into `audio.js` and `config.js`, then separated the carousel into its own `carousel.js` file. Reorganized `script.js` into clearly sectioned blocks (DOM refs, state, lifecycle, character logic, player interaction, UI updates, event listeners).
+Modularized codebase into audio.js, config.js, and carousel.js while organizing script.js by functional blocks.
 
 ---
 
